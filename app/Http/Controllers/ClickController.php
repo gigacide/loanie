@@ -19,7 +19,7 @@ class ClickController extends Controller
         $aff_sub3 = $request->input('aff_sub3');
         $aff_sub4 = $request->input('aff_sub4');
         $aff_sub5 = $request->input('aff_sub5');
-        $transaction_id = Str::uuid();
+//        $transaction_id = Str::uuid();
 
         // Create a new Click record
         $click = new Click();
@@ -30,7 +30,7 @@ class ClickController extends Controller
         $click->aff_sub3 = $aff_sub3;
         $click->aff_sub4 = $aff_sub4;
         $click->aff_sub5 = $aff_sub5;
-        $click->transaction_id = $transaction_id;
+//        $click->transaction_id = $transaction_id;
         $click->save();
 
 // Perform any additional actions if needed
