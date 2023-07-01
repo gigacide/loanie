@@ -196,22 +196,22 @@
 ////
 ////
 ////
-////    Schema::create('postbacks', function (Blueprint $table) {
-////        $table->id();
-////        $table->string('url');
-////        $table->json('request')->nullable();
-////        $table->json('response')->nullable();
-////        $table->timestamps();
-////    });
+//    Schema::create('postbacks', function (Blueprint $table) {
+//        $table->id();
+//        $table->string('url');
+//        $table->json('request')->nullable();
+//        $table->json('response')->nullable();
+//        $table->timestamps();
+//    });
 ////}
-////CREATE TABLE `postbacks` (
-////`id` bigint unsigned not null auto_increment primary key,
-////  `url` varchar(255) not null,
-////  `request` json null,
-////  `response` json null,
-////  `created_at` timestamp null,
-////  `updated_at` timestamp null
-////);
+//CREATE TABLE `postbacks` (
+//`id` bigint unsigned not null auto_increment primary key,
+//  `url` varchar(255) not null,
+//  `request` json null,
+//  `response` json null,
+//  `created_at` timestamp null,
+//  `updated_at` timestamp null
+//);
 ////
 ////
 ////        Schema::create('loan_applications', function (Blueprint $table) {

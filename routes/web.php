@@ -60,9 +60,9 @@ Route::get('short-term-loans', [PageController::class, 'short_term_loans'])->nam
 
 Route::get('/click', [ClickController::class, 'track'])->name('click.track');
 
-//Route::get('/register', function () {
-//    return response('Forbidden', Response::HTTP_FORBIDDEN);
-//})->name('register');
+Route::get('/register', function () {
+    return response('Forbidden', Response::HTTP_FORBIDDEN);
+})->name('register');
 //
 //Route::group(['middleware' => 'role:admin'], function () {
 //    // Routes accessible only to users with the 'admin' role
