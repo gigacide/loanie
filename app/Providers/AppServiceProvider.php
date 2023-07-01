@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LoanApplicationService::class, function ($app) {
-            return new LoanApplicationService(new Client());
+            return new LoanApplicationService(new Client(), new ItMediaApiService());
         });
 
         $this->app->singleton(ItMediaApiService::class, function ($app) {
