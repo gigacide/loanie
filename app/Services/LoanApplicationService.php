@@ -11,8 +11,9 @@ class LoanApplicationService
     protected Client $client;
     protected ItMediaApiService $itMediaApiService;
 
-    public function __construct(ItMediaApiService $itMediaApiService)
+    public function __construct(Client $client, ItMediaApiService $itMediaApiService)
     {
+        $this->client = $client;
         $this->itMediaApiService = $itMediaApiService;
     }
 
