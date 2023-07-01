@@ -306,7 +306,7 @@ function handleSuccess() {
     progressDiv.classList.remove("hide_element");
     document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
 
-    const url = "http://127.0.0.1:8000/api/process";
+    const url = "https://loanieloans.com/api/process";
 
     fetch(url, {
         method: "POST",
@@ -633,8 +633,8 @@ function processFormData() {
         o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
-        h = getIpAddress("http://127.0.0.1:8000/api/get_ip"),
-        // h = '127.0.0.1:8000'
+        h = getIpAddress("https://loanieloans.com/api/get_ip"),
+        // h = 'loanieloans.com'
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
         followingPayDates = followingPayDate(),
@@ -678,7 +678,7 @@ function processFormData() {
         maxCommissionAmount: 0.00,
         source: {
             userAgent : window.navigator.userAgent,
-            ipAddress: '127.0.0.1:8000',
+            ipAddress: 'loanieloans.com',
             creationUrl: 'https://loanie.net',
             referringUrl: 'https://loanie.net',
         },
@@ -771,7 +771,7 @@ function processFormDataSpecialOffer() {
         // o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
-        // h = getIpAddress("http://127.0.0.1:8000/api/geo/ip"),
+        // h = getIpAddress("https://loanieloans.com/api/geo/ip"),
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
         followingPayDates = followingPayDate(),
