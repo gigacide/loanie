@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 <head><title>Welcome to Loanie Loan, Your choice to get FREE lender quotes in minutes</title>
     <meta name=description
-          content="Loanie is a credit Broker. Our FREE quoting service compares more than 50 lenders within a matter of minutes. Warning: Late repayment can cause you serious money problems. For help go to moneyhelper.org.uk">
+          content="Loanie is a credit Broker. Our FREE quoting service compares more than 50 lenders within a matter of minutes. Warning: Late repayment can cause you serious money problems.">
     <meta charset=utf-8>
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width, initial-scale=1.0">
