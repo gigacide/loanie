@@ -41,7 +41,7 @@ class FormController extends Controller
     public function process(Request $request): JsonResponse
     {
 
-        dd($request);
+//        dd($request);
         try {
             $validApplication = LoanApplicationValidation::validate($request->all());
 
