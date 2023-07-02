@@ -22,7 +22,8 @@ class ItMediaApiService
     public function __construct()
     {
         $this->client = new Client();
-        $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2';
+//        $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; //test
+        $this->url = 'https://api.itmedia.xyz/post/productionjson/api/v2'; //live
         $this->apiKey = 'f4aa37b1e259134058ce85f20ea8d356c97da52c';
         $this->campaignId = 'uping';
         $this->apiUsername = 'Amikaro_ToptoBottom';
@@ -38,8 +39,8 @@ class ItMediaApiService
             $this->client = new Client();
         }
         if ($this->url === null) {
-            $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; //test
-//            $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; live
+//            $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; //test
+            $this->url = 'https://api.itmedia.xyz/post/productionjson/api/v2'; // live
         }
         if ($this->apiKey === null) {
             $this->apiKey = 'f4aa37b1e259134058ce85f20ea8d356c97da52c';
