@@ -94,7 +94,7 @@ class PostbackService
         $postbackUrl = str_replace("{aff_sub4}", $loanApplication['aff_sub4'] ?? '', $postbackUrl);
         $postbackUrl = str_replace("{aff_sub5}", $loanApplication['aff_sub5'] ?? '', $postbackUrl);
         $postbackUrl = str_replace("{transaction_id}", $loanApplication['transaction_id'] ?? '', $postbackUrl);
-        $postbackUrl = str_replace("{amount}", '20.00', $postbackUrl);
+        $postbackUrl = str_replace("{amount}", '16.00', $postbackUrl);
 
         return $postbackUrl;
     }

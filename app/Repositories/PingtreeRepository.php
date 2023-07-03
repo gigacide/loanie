@@ -6,6 +6,7 @@ use App\Models\Applicant;
 use App\Models\Bank;
 use App\Models\Consent;
 use App\Models\Employer;
+use App\Models\Expense;
 use App\Models\Loan;
 use App\Models\Residence;
 use App\Models\Source;
@@ -197,8 +198,7 @@ class PingtreeRepository
 
 
         if ($response) {
-            $lead = LoanApplication::where('uuid', $uuid)->first();
-            return $lead;
+            return LoanApplication::where('uuid', $uuid)->first();
         } else {
             return false;
         }

@@ -31,12 +31,8 @@ class LoanApplicationService
     {
         $mappedData = [];
 
-
         $mappedData['incomeSource'] = $this->mappedIncomeSource($requestData['employer']['incomeSource']);
         $mappedData['LoanReason'] = $this->mappedLoanReason($requestData['loan']['loanPurpose']);
-        $mappedData['creditType'] = $this->mappedCreditType($requestData['applicant']['creditType']);
-        $mappedData['armedForces'] = $this->mappedArmedForces($requestData['applicant']['inMilitary']);
-        $mappedData['CallTime'] = $this->mappedCallTime($requestData['applicant']['callTime']);
         $mappedData['nextPayday'] = date("d-m-Y", strtotime($requestData['employer']['nextPayDateYear'] . '-' . $requestData['employer']['nextPayDateMonth'] . '-' . $requestData['employer']['nextPayDateDay']));
         $mappedData['secondPayday'] = date("d-m-Y", strtotime($requestData['employer']['followingPayDateYear'] . '-' . $requestData['employer']['followingPayDateMonth'] . '-' . $requestData['employer']['followingPayDateDay']));
 
@@ -52,9 +48,9 @@ class LoanApplicationService
             'amount' => $requestData['loan']['loanAmount'],
             'fName' => $requestData['applicant']['firstName'],
             'lName' => $requestData['applicant']['lastName'],
-            'zip' => $requestData['residence']['zip'],
+            'postcode' => $requestData['residence']['zip'],
             'city' => $requestData['residence']['city'],
-            'state' => $requestData['residence']['state'],
+            'county' => $requestData['residence']['state'],
             'address' => $requestData['residence']['addressStreet1'],
             'lengthAtAddress' => $requestData['residence']['monthsAtAddress'],
             'licenseState' => $requestData['applicant']['drivingLicenseState'],
