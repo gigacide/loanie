@@ -643,43 +643,43 @@
                                             <label>Years at employer</label>
                                             <div class="form-choice radio-class radio-large">
                                                 <div class="field-choice">
-                                                    <input id="noyears" name="radio_employerYears" onclick="showEmployerMonths(event)"
+                                                    <input id="noyears" name="radio_employerYears"
                                                            type="radio" value="12">
                                                     <label class="form-control transition" for="noyears">0</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="oneyear" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="oneyear" name="radio_employerYears"
                                                            type="radio" value="12">
                                                     <label class="form-control transition" for="oneyear">1</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="twoyears" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="twoyears" name="radio_employerYears"
                                                            type="radio" value="24">
                                                     <label class="form-control transition" for="twoyears">2</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="threeyears" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="threeyears" name="radio_employerYears"
                                                            type="radio" value="36">
                                                     <label class="form-control transition" for="threeyears">3</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="fouryears" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="fouryears" name="radio_employerYears"
                                                            type="radio" value="48">
                                                     <label class="form-control transition" for="fouryears">4</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="fiveyears" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="fiveyears" name="radio_employerYears"
                                                            type="radio" value="60">
                                                     <label class="form-control transition" for="fiveyears">5</label>
                                                 </div>
                                                 <div class="field-choice ">
-                                                    <input id="sixyears" name="radio_employerYears" onclick="hideEmployerMonths(event)"
+                                                    <input id="sixyears" name="radio_employerYears"
                                                            type="radio" value="72">
                                                     <label class="form-control transition" for="sixyears">6</label>
                                                 </div>
                                                 <div class="field-choice ">
                                                     <input id="sevenplusyears" name="radio_employerYears"
-                                                           onclick="hideEmployerMonths(event)" type="radio" value="84">
+                                                            type="radio" value="84">
                                                     <label class="form-control transition" for="sevenplusyears">7+</label>
                                                 </div>
                                             </div>
@@ -730,22 +730,22 @@
                                         <label>How often are you paid? </label>
                                         <div class="form-choice radio-class radio-large">
                                             <div class="field-choice" id="weekly1">
-                                                <input id="weekly" name="radio_frequency" onclick="calculateIncome();"
+                                                <input id="weekly" name="radio_frequency"
                                                        type="radio" value="1">
                                                 <label class="form-control transition" for="weekly">Weekly</label>
                                             </div>
                                             <div class="field-choice">
-                                                <input id="bi" name="radio_frequency" onclick="calculateIncome();"
+                                                <input id="bi" name="radio_frequency"
                                                        type="radio" value="2">
                                                 <label class="form-control transition" for="bi">Bi-Weekly</label>
                                             </div>
                                             <div class="field-choice">
-                                                <input id="semi" name="radio_frequency" onclick="calculateIncome();"
+                                                <input id="semi" name="radio_frequency"
                                                        type="radio" value="3">
                                                 <label class="form-control transition" for="semi">Fortnightly</label>
                                             </div>
                                             <div class="field-choice">
-                                                <input id="monthly" name="radio_frequency" onclick="calculateIncome();"
+                                                <input id="monthly" name="radio_frequency"
                                                        type="radio" value="9">
                                                 <label class="form-control transition" for="monthly">Monthly</label>
                                             </div>

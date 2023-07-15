@@ -9,12 +9,12 @@ use GuzzleHttp\Exception\GuzzleException;
 class LoanApplicationService
 {
     protected Client $client;
-    protected ItMediaApiService $itMediaApiService;
+    protected LoanieApiService $loanieApiService;
 
-    public function __construct(Client $client, ItMediaApiService $itMediaApiService)
+    public function __construct(Client $client, LoanieApiService $loanieApiService)
     {
         $this->client = $client;
-        $this->itMediaApiService = $itMediaApiService;
+        $this->loanieApiService = $loanieApiService;
     }
 
     /**
@@ -22,9 +22,8 @@ class LoanApplicationService
      */
     public function sendLoanApplication(array $data): CustomResponse|SoldResponse|\RejectedWithPriceRejectResponse|ErrorResponse|RejectedResponse
     {
-        $mappedData = $this->mapData($data);
 
-        return $this->itMediaApiService->sendLoanApplication($mappedData);
+        return $this->loanieApiService->sendLoanApplication($data);
     }
 
     public function mapData(array $requestData): array

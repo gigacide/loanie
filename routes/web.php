@@ -22,23 +22,6 @@ use App\Http\Controllers\AffiliateController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-    Route::get('/leads', [LeadsController::class, 'index'])->name('leads.index');
-    Route::get('/affiliates', [AffiliateController::class, 'index'])->name('affiliates.index');
-    Route::get('/postbacklogs', [PostbackController::class, 'index'])->name('postback.index');
-    Route::get('/commissionlogs', [CommissionController::class, 'index'])->name('commission.index');
-    Route::get('/buyers', [BuyerController::class, 'index'])->name('buyers.index');
-
-});
 
 Route::get('/', [PageController::class, 'home_us'])->name('home-us');
 Route::get('apply-us', [PageController::class, 'loan_eligibility_check'])->name('apply-us');
@@ -59,22 +42,4 @@ Route::get('quick-loans', [PageController::class, 'quick_loans'])->name('quick-l
 Route::get('short-term-loans', [PageController::class, 'short_term_loans'])->name('short-term-loans');
 
 Route::get('/click', [ClickController::class, 'track'])->name('click.track');
-
-Route::get('/register', function () {
-    return response('Forbidden', Response::HTTP_FORBIDDEN);
-})->name('register');
-//
-//Route::group(['middleware' => 'role:admin'], function () {
-//    // Routes accessible only to users with the 'admin' role
-//    Route::get('/dashboard', 'AdminController@dashboard');
-//    Route::get('/users', 'AdminController@users');
-//    // Add more admin routes as needed
-//});
-//
-//Route::group(['middleware' => 'role:affiliate'], function () {
-//    // Routes accessible only to users with the 'affiliate' role
-//    Route::get('/dashboard', 'AffiliateController@dashboard');
-//    Route::get('/campaigns', 'AffiliateController@campaigns');
-//    // Add more affiliate routes as needed
-//});
 

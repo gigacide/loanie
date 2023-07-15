@@ -10,23 +10,15 @@ use App\Services\RejectedResponse;
 use RejectedWithPriceRejectResponse;
 use App\Services\SoldResponse;
 
-class ItMediaApiService
+class LoanieApiService
 {
     protected ?Client $client = null;
 
     protected ?string $url = null;
-    protected ?string $apiKey = null;
-    protected ?string $campaignId = null;
-    protected ?string $apiUsername = null;
-
     public function __construct()
     {
         $this->client = new Client();
-//        $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; //test
-        $this->url = 'https://api.itmedia.xyz/post/productionjson/api/v2'; //live
-        $this->apiKey = 'f4aa37b1e259134058ce85f20ea8d356c97da52c';
-        $this->campaignId = 'uping';
-        $this->apiUsername = 'Amikaro_ToptoBottom';
+        $this->url = 'http://127.0.0.1:8000/api/process'; //live
     }
 
     /**
@@ -39,17 +31,8 @@ class ItMediaApiService
             $this->client = new Client();
         }
         if ($this->url === null) {
-//            $this->url = 'https://api.itmedia.xyz/post/testjson/api/v2'; //test
-            $this->url = 'https://api.itmedia.xyz/post/productionjson/api/v2'; // live
-        }
-        if ($this->apiKey === null) {
-            $this->apiKey = 'f4aa37b1e259134058ce85f20ea8d356c97da52c';
-        }
-        if ($this->campaignId === null) {
-            $this->campaignId = 'uping';
-        }
-        if ($this->apiUsername === null) {
-            $this->apiUsername = 'Amikaro_ToptoBottom';
+            $this->url = 'http://127.0.0.1:8000/api/process'; //live
+
         }
 
 

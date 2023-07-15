@@ -168,9 +168,9 @@ function toggleAddressFields() {
 }
 
 function toggleTypeOfHousing(n) {
-    for (var t, r = n.target.value, u = document.querySelectorAll('input[name="type_of_housing"]'), f = document.querySelectorAll('input[name="number_of_renters"]'), i = 0; i < u.length; i++) u[i].checked = !1;
-    for (t = 0; t < f.length; t++) f[t].checked = !1;
-    r == "2" || r == "3" ? document.getElementById("type-of-housing").classList.remove("hide_element") : document.getElementById("type-of-housing").classList.add("hide_element")
+    // for (var t, r = n.target.value, u = document.querySelectorAll('input[name="type_of_housing"]'), f = document.querySelectorAll('input[name="number_of_renters"]'), i = 0; i < u.length; i++) u[i].checked = !1;
+    // for (t = 0; t < f.length; t++) f[t].checked = !1;
+    // r == "2" || r == "3" ? document.getElementById("type-of-housing").classList.remove("hide_element") : document.getElementById("type-of-housing").classList.add("hide_element")
 }
 
 function getPostalCodeInfo() {
@@ -306,10 +306,12 @@ function handleSuccess() {
     progressDiv.classList.remove("hide_element");
     document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
 
-    const url = "https://loanieloans.com/api/process";
+    const url = "http://127.0.0.1:8000/api/process";
 
     fetch(url, {
         method: "POST",
+        mode: "cors", // Set the mode to 'cors' for CORS requests
+        credentials: "same-origin", // Set the credentials to 'same-origin' to include cookies in the request (if applicable)
         headers: {
             "Content-Type": "application/json"
         },
@@ -317,31 +319,51 @@ function handleSuccess() {
     })
         .then(response => response.json())
         .then(responseData => {
-            console.log('POST::', responseData);
+            console.log('POST::', n)
+            debugger
 
-            if (responseData.Status === "Sold") {
-                handleSold(responseData);
-            }
-            else if (responseData.Status === "Rejected") {
-                const leadID = responseData.LeadID;
+            var checkStatusID = n.CheckStatusID
+            console.log('checkStatus ID::', checkStatusID)
+            console.log('POST::', n)
+            debugger
+            var i = "http://127.0.0.1:8000/check-lead-status/" + checkStatusID, t = setInterval(() => {
+                var r;
+                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
+                    r = n;
 
-                if (responseData.PriceRejectAmount) {
-                    const priceRejectAmount = responseData.PriceRejectAmount;
-                    handleRejectedWithPriceReject(responseData);
-                } else {
-                    handleRejected(responseData);
-                }
-            } else
-                if (responseData.Messages !== null) {
-                    // Messages is set, handle the error response
-                    const errorMessages = responseData.Messages;
-                    if (errorMessages && errorMessages.length > 0) {
-                        const errorMessage = errorMessages[0];
-                        alert('An error occurred: ' + errorMessage);
+                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.CheckStatus, i = r.RedirectURL;
+                    console.log(u)
+                    debugger
+                    if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
+                    if (e == "NoLenderFound" || f == 100 && !i) {
+                        countdownDiv.classList.add("hide_element");
+                        console.warn("no lender");
+                        statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+                        clearInterval(t);
+                        return
                     }
-                    handleError(responseData);
-
-            }
+                }).catch(i => {
+                    var o = n, e;
+                    clearInterval(t);
+                    var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
+                        f = o.Errors;
+                    console.log(f);
+                    u.innerHTML = "";
+                    f.forEach(function (n) {
+                        return u.innerHTML += "<p>" + n + "<\/p>"
+                    });
+                    r.classList.remove("hide_element");
+                    progressDiv.classList.add("hide_element");
+                    form.classList.remove("hide_element");
+                    e = document.querySelectorAll(".tab");
+                    e.forEach(n => {
+                        n.style.display = "block"
+                    });
+                    r.scrollIntoView();
+                    window.scrollBy({top: -200, behavior: "smooth"});
+                    console.error("Error:", i)
+                })
+            }, 2500)
         });
 }
 
@@ -510,11 +532,11 @@ function showJobFields(n) {
     toggleNetGrossMonthly(n);
     jobFields.classList.remove("hide_element");
     jobFields.classList.add("show_element");
-    document.getElementById("netamount").value = "";
-    hideRetirementPensionField();
-    hideGovernmentBenefitsField();
-    document.getElementById("other_income_checkbox").checked = !1;
-    document.getElementById("other_benefits_field").classList.add("hide_element");
+    // document.getElementById("netamount").value = "";
+    // hideRetirementPensionField();
+    // hideGovernmentBenefitsField();
+    // document.getElementById("other_income_checkbox").checked = !1;
+    // document.getElementById("other_benefits_field").classList.add("hide_element");
     t || hideIncomeMessage(i)
 }
 
@@ -525,25 +547,25 @@ function hideJobFields(n) {
     jobFields.classList.remove("show_element");
     jobFields.classList.add("hide_element");
     console.log(i);
-    t == 5 && (document.getElementById("netamount").value = "0", hideGovernmentBenefitsField(), showRetirementPensionField(), addTotalUserIncome());
-    (t == 6 || t == 7) && (document.getElementById("netamount").value = "0", hideRetirementPensionField(), showGovernmentBenefitsField(), addTotalUserIncome());
+    // t == 5 && (document.getElementById("netamount").value = "0", hideGovernmentBenefitsField(), showRetirementPensionField(), addTotalUserIncome());
+    // (t == 6 || t == 7) && (document.getElementById("netamount").value = "0", hideRetirementPensionField(), showGovernmentBenefitsField(), addTotalUserIncome());
     i && showIncomeMessage(t)
 }
 
 function showIncomeMessage(n) {
-    if (incomeMessageDiv.classList.remove("hide_element"), n != 1) {
-        var t = new XMLHttpRequest;
-        t.open("POST", "https://leads.uping.uk/application/metric/benefitsincomemessage/display", !0);
-        t.send("")
-    }
+    // if (incomeMessageDiv.classList.remove("hide_element"), n != 1) {
+    //     var t = new XMLHttpRequest;
+    //     t.open("POST", "https://leads.uping.uk/application/metric/benefitsincomemessage/display", !0);
+    //     t.send("")
+    // }
 }
 
 function hideIncomeMessage(n) {
-    if (incomeMessageDiv.classList.add("hide_element"), n != 1) {
-        var t = new XMLHttpRequest;
-        t.open("POST", "https://leads.uping.uk/application/metric/benefitsincomemessage/change", !0);
-        t.send("")
-    }
+    // if (incomeMessageDiv.classList.add("hide_element"), n != 1) {
+    //     var t = new XMLHttpRequest;
+    //     t.open("POST", "https://leads.uping.uk/application/metric/benefitsincomemessage/change", !0);
+    //     t.send("")
+    // }
 }
 
 function showEmployerMonths() {
@@ -559,27 +581,27 @@ function hideEmployerMonths() {
 }
 
 function showAddressMonths() {
-    document.getElementById("address-months").classList.remove("hide_element")
+    // document.getElementById("address-months").classList.remove("hide_element")
 }
 
 function hideAddressMonths() {
-    var n = document.querySelectorAll('input[name="radio_addressMonths"]');
-    n.forEach(function (n) {
-        n.checked = !1
-    });
-    document.getElementById("address-months").classList.add("hide_element")
+    // var n = document.querySelectorAll('input[name="radio_addressMonths"]');
+    // n.forEach(function (n) {
+    //     n.checked = !1
+    // });
+    // document.getElementById("address-months").classList.add("hide_element")
 }
 
 function showBankMonths() {
-    document.getElementById("bank-months").classList.remove("hide_element")
+    // document.getElementById("bank-months").classList.remove("hide_element")
 }
 
 function hideBankMonths() {
-    var n = document.querySelectorAll('input[name="radio_bankMonths"]');
-    n.forEach(function (n) {
-        n.checked = !1
-    });
-    document.getElementById("bank-months").classList.add("hide_element")
+    // var n = document.querySelectorAll('input[name="radio_bankMonths"]');
+    // n.forEach(function (n) {
+    //     n.checked = !1
+    // });
+    // document.getElementById("bank-months").classList.add("hide_element")
 }
 
 function dobToEpoch() {
@@ -594,7 +616,8 @@ function dobToEpoch() {
 
 function getIpAddress(n) {
     var t = new XMLHttpRequest;
-    return t.open("GET", n, !1), t.send(null), t.response.replace(/['"]+/g, "")
+    return '127.0.0.1'
+    // return t.open("GET", n, !1), t.send(null), t.response.replace(/['"]+/g, "")
 }
 
 function createImpression() {
@@ -633,7 +656,8 @@ function processFormData() {
         o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
-        h = getIpAddress("https://loanieloans.com/api/get_ip"),
+        h = '127.0.0.1',
+        // h = getIpAddress("https://loanieloans.com/api/get_ip"),
         // h = 'loanieloans.com'
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
@@ -646,15 +670,9 @@ function processFormData() {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const affiliate_id = urlParams.get('affiliate_id') ?? 'AFF1000';
+    const affiliate_id = urlParams.get('affiliate_id') ?? '0001';
     const offer_id = urlParams.get('offer_id')  ?? '2';
     const transaction_id = urlParams.get('transaction_id')  ?? '';
-    // const aff_sub = urlParams.get('aff_sub')  ?? '';
-    // const aff_sub2 = urlParams.get('aff_sub2')  ?? '';
-    // const aff_sub3 = urlParams.get('aff_sub3')  ?? '';
-    // const aff_sub4 = urlParams.get('aff_sub4')  ?? '';
-    // const aff_sub5 = urlParams.get('aff_sub5')  ?? '';
-    // const fb_pix = urlParams.get('fb_pix')  ?? '';
 
     debugger
 
@@ -670,7 +688,6 @@ function processFormData() {
         aff_sub3: document.getElementById("aff_sub3").value ?? 'null',
         aff_sub4: document.getElementById("aff_sub4").value ?? 'null',
         aff_sub5: document.getElementById("aff_sub5").value ?? 'null',
-        // fb_pix: params.fbpix ?? '',
         istest: false,
         subid: uping.defaultSubAffiliate,
         timeout: 210,
@@ -678,9 +695,9 @@ function processFormData() {
         maxCommissionAmount: 0.00,
         source: {
             userAgent : window.navigator.userAgent,
-            ipAddress: 'loanieloans.com',
-            creationUrl: 'https://loanie.net',
-            referringUrl: 'https://loanie.net',
+            ipAddress: h,
+            creationUrl: 'www.loanieloans.com',
+            referringUrl: 'www.loanieloans.com',
         },
         loan: {
             loanAmount: Number(document.getElementById("loanAmount").value.replace(/\D/g, "")),
@@ -771,6 +788,7 @@ function processFormDataSpecialOffer() {
         // o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
+        h = '127.0.0.1',
         // h = getIpAddress("https://loanieloans.com/api/geo/ip"),
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),

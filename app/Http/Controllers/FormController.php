@@ -36,12 +36,11 @@ class FormController extends Controller
 
     }
     /**
-     * @throws ValidationException|GuzzleException
+     * @throws GuzzleException
      */
     public function process(Request $request): JsonResponse
     {
 
-        dd('boom');
         try {
             $validApplication = LoanApplicationValidation::validate($request->all());
 
@@ -49,51 +48,12 @@ class FormController extends Controller
             $uuid = Str::uuid();
             (string)$validApplication['uuid'] = $uuid;
 
-            $loanApplication = (new LoanApplication)->store($validApplication);
-
             // Send the loan application data to the third-party provider
             $apiResponse = $this->loanApplicationService->sendLoanApplication($validApplication);
 
-            // Prepare Response
-            $clientResponse = $this->loanApplicationService->handleLoanApplicationResponse($apiResponse);
-            $buyerLeadPrice = $clientResponse['Price'];
-
-            // Find the Affiliate and Offer
-            $affiliate = Affiliate::where('affiliate_id', $loanApplication['affiliate_id'])->first();
-            if ($affiliate == null) { Affiliate::where('affiliate_id', 'AFF1000')->first(); };
-            $offer = Offer::where('id', $loanApplication['offer_id'])->first();
-
-            // Take 10%
-            $affiliateLeadPrice = $this->applyProfit($clientResponse);
-            $clientResponse['Price'] = $affiliateLeadPrice;
-
-            // Check Offer - CPL / REV
-            if ($this->isCPLOffer($offer)) {
-
-                $affiliate = $this->accumulateEarningsForAffiliate($affiliate, $affiliateLeadPrice);
-
-                if ($affiliate->cpl_earnings >= $offer->threshold) {
-
-                    $this->accumulateEarningsForAffiliateAfterThreshold($affiliate);
-
-
-                    $loanApplicationResponse = $this->postbackService->sendCPLPostback($affiliate, $clientResponse, $loanApplication);
-                } else {
-                    Log::debug('Affiliate threshold not exceeded', (array) $affiliate);
-
-                }
-            } else {
-                $loanApplicationResponse = $this->postbackService->sendPostback($affiliate, $clientResponse, $loanApplication);
-            }
-
-
-            $this->loanApplicationService->updateLoanApplication($loanApplication, $buyerLeadPrice, $loanApplicationResponse);
-
-            // Log the commission response
-            CommissionLog::store($affiliate, $offer->id, $loanApplicationResponse['Price']);
 
             // Process the response and return a JSON response
-            return response()->json($loanApplicationResponse);
+            return response()->json($apiResponse);
 
         } catch (ValidationException $e) {
 
