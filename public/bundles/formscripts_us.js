@@ -324,15 +324,15 @@ function handleSuccess() {
             debugger;
 
             var i = CheckStatusURL;
-                t = setInterval(() => {
-                    var r;
-                    var corid = checkStatusID;
-                    var url = `https://portal.loanieloans.com/api/check-lead-status`;
-                    fetch(url, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: corid})
-                        .then(response => response.json())
-                        .then(response => {
-                            console.log('123', response)
-                            debugger
+            t = setInterval(() => {
+                var r;
+                var url = `https://portal.loanieloans.com/api/check-lead-status`;
+                fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ correlationId }) })
+                    .then(response => response.json())
+                    .then(response => {
+                        console.log('123', response);
+                        // Rest of your code here
+                    })
                             // Parse the response data manually as JSON
                             // const json = JSON.parse(response);
                             //
