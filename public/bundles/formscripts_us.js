@@ -275,7 +275,12 @@ function addError(n, t) {
 }
 
 function trackProgress(n) {
-    if (window.scrollTo(0, 0), document.getElementById("progressBar").classList.remove("hide_element"), document.getElementById("barStatus")) return (!n || n < 8) && (n = "8"), document.getElementById("barStatus").style.width = n + "%", document.getElementById("barStatus").innerHTML = n + "%", !1
+    if (window.scrollTo(0, 0),
+        document.getElementById("progressBar").classList.remove("hide_element"),
+        document.getElementById("barStatus")) return (!n || n < 8) && (n = "8"),
+        document.getElementById("barStatus").style.width = n + "%",
+        document.getElementById("barStatus").innerHTML = n + "%",
+        !1
 }
 
 function startCountDown(n, t) {
@@ -340,16 +345,19 @@ function handleSuccess() {
 
             var i = checkStatusURL, t = setInterval(() => {
                 var r;
-                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
-                    r = response[0];
+                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}})
+                    .then(n => n.json())
+                    .then(n => {
+                    r = n;
 
-                    var u = checkStatusID,
-                        f = percentageComplete,
-                        e = checkStatus,
-                        i = redirectURL;
+                    var u = n.checkStatusID,
+                        f = n.percentageComplete,
+                        e = n.checkStatus,
+                        i = n.redirectURL;
                     console.log(u,f, e, i)
                     debugger
-                    if (trackProgress(f), i) return
+                    if (trackProgress(f), i)
+                        return
                         console.warn("redirecting"),
                         progressDiv.classList.add("hide_element"),
                         countdownDiv.classList.remove("hide_element"),
