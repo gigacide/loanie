@@ -324,26 +324,41 @@ function handleSuccess() {
             debugger
             var i = "https://portal.loanieloans.com/api/check-lead-status/" + checkStatusID, t = setInterval(() => {
                 var r;
-                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}})
+                fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
                     .then(n => n.json())
-                    .then(n => {
-                    r = n;
-                    console.log('GET::', r)
-                    debugger
+                    .then(responseData => {
+                        console.log('GET::', responseData);
+                        debugger;
 
-                    var u = r[0].CheckStatusID, f = r[0].PercentageComplete, e = r[0].CheckStatus, i = r[0].RedirectURL;
-                    console.log(u)
-                    debugger
-                    if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
-                    if (e == "NoLenderFound" || f == 100 && !i) {
-                        countdownDiv.classList.add("hide_element");
-                        console.warn("no lender");
-                        statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-                        clearInterval(t);
-                        return
-                    }
-                })
+                        const percentageComplete = responseData.PercentageComplete;
+                        const checkStatus = responseData.CheckStatus;
+                        const leadId = responseData.LeadId;
+                        const price = responseData.Price;
+                        const redirectUrl = responseData.RedirectUrl;
 
+                        console.log(percentageComplete, checkStatus, leadId, price, redirectUrl);
+                        debugger;
+
+                        // Continue with your logic here using the variables
+                    })
+                    .catch(error => {
+                        // Handle any errors that occurred during the request
+                        console.error(error);
+                    });
+
+                    // var u = r[0].CheckStatusID, f = r[0].PercentageComplete, e = r[0].CheckStatus, i = r[0].RedirectURL;
+                    // console.log(u)
+                    // debugger
+                    // if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
+                    // if (e == "NoLenderFound" || f == 100 && !i) {
+                    //     countdownDiv.classList.add("hide_element");
+                    //     console.warn("no lender");
+                    //     statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+                    //     clearInterval(t);
+                    //     return
+                    // }
+                // })
+            //
             }, 2500);
         });
 }
