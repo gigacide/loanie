@@ -309,10 +309,6 @@ function handleSuccess() {
     fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
         .then(n => n.json())
         .then(n => {
-            // if (n.status === 'form_validation_errors') {
-            //     return console.warn("error");
-            // }
-
             console.log('POST::', n)
             debugger
 
