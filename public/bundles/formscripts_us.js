@@ -330,6 +330,7 @@ function handleSuccess() {
                     fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } })
                         .then(n => n.json())
                         .then(n => {
+                            console.log('here');
                             console.log('POST::', n);
                             r = JSON.parse(n)
                             debugger;
