@@ -332,10 +332,10 @@ function handleSuccess() {
                             console.log('GET::', r);
                             debugger;
 
-                            var u = r[0].CheckStatusID,
-                                f = r[0].PercentageComplete,
-                                e = r[0].CheckStatus,
-                                i = r[0].RedirectURL;
+                            var u = r.CheckStatusID,
+                                f = r.PercentageComplete,
+                                e = r.CheckStatus,
+                                i = r.RedirectURL;
                             console.log(u);
                             debugger;
 
