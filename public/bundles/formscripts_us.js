@@ -333,8 +333,10 @@ function handleSuccess() {
                             'Content-Type': 'application/json'
                         }
                     })
-                        .then(response => response.text()) // Parse the response as text
+                        .then(response => response.json()) // Parse the response as text
                         .then(responseData => {
+                            console.log(responseData)
+                            debugger
                             // Parse the response data manually as JSON
                             const json = JSON.parse(responseData);
 
