@@ -375,7 +375,6 @@ function handleSuccess() {
                             //     clearInterval(t);
                             //     return;
                             // }
-                        })
 
                 }, 2500);
         });
