@@ -331,6 +331,9 @@ function handleSuccess() {
                         .then(n => n.json())
                         .then(n => {
                             console.log('POST::', n);
+                            r = JSON.parse(n)
+                            debugger;
+                            console.log('PARSED::', r);
                             debugger;
 
                             var u = r.CheckStatusID,
