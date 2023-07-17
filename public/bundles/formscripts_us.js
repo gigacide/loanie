@@ -313,7 +313,6 @@ function handleSuccess() {
     // n = "http://127.0.0.1:8001/api/application/usa/post";
     n = "https://portal.loanieloans.com/api/process";
     fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
-        .then(n => n.json())
         .then(n => {
             console.log('POST::', n)
             debugger
