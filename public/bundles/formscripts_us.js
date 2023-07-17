@@ -339,8 +339,11 @@ function handleSuccess() {
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = response;
 
-                    var u = r.checkStatusID, f = r.percentageComplete, e = r.checkStatus, i = r.RedirectURL;
-                    console.log(u)
+                    var u = r.checkStatusID,
+                        f = r.percentageComplete,
+                        e = r.checkStatus,
+                        i = r.RedirectURL;
+                    console.log(u,f, e, i)
                     debugger
                     if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
                     if (e == "Rejected" || f == 100 && !i) {
