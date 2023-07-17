@@ -147,8 +147,8 @@ function addTotalUserIncome() {
     t = document.getElementById("netamount").value;
     // i = document.getElementById("retirement_pension_benefits").value;
     // r = document.getElementById("government_benfits").value;
-    u = document.getElementById("other_income").value;
-    n = document.getElementById("total_monthly_amount");
+    // u = document.getElementById("other_income").value;
+    // n = document.getElementById("total_monthly_amount");
     f = document.getElementById("total_monthly_message");
     n.value = Number(t) + Number(i) + Number(r) + Number(u);
     n.dispatchEvent(new Event("input", {bubbles: !0}));
@@ -306,7 +306,7 @@ function handleSuccess() {
     progressDiv.classList.remove("hide_element");
     document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
 
-    const url = "http://127.0.0.1:8000/api/process";
+    const url = "https://portal.loanieloans.com/api/process";
 
     fetch(url, {
         method: "POST",
@@ -326,7 +326,7 @@ function handleSuccess() {
             console.log('checkStatus ID::', checkStatusID)
             console.log('POST::', n)
             debugger
-            var i = "http://127.0.0.1:8000/check-lead-status/" + checkStatusID, t = setInterval(() => {
+            var i = "https://portal.loanieloans.com/check-lead-status/" + checkStatusID, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
@@ -569,15 +569,15 @@ function hideIncomeMessage(n) {
 }
 
 function showEmployerMonths() {
-    document.getElementById("employer-months").classList.remove("hide_element")
+    // document.getElementById("employer-months").classList.remove("hide_element")
 }
 
 function hideEmployerMonths() {
-    var n = document.querySelectorAll('input[name="radio_employerMonths"]');
-    n.forEach(function (n) {
-        n.checked = !1
-    });
-    document.getElementById("employer-months").classList.add("hide_element")
+    // var n = document.querySelectorAll('input[name="radio_employerMonths"]');
+    // n.forEach(function (n) {
+    //     n.checked = !1
+    // });
+    // document.getElementById("employer-months").classList.add("hide_element")
 }
 
 function showAddressMonths() {
@@ -616,8 +616,8 @@ function dobToEpoch() {
 
 function getIpAddress(n) {
     var t = new XMLHttpRequest;
-    return '127.0.0.1'
-    // return t.open("GET", n, !1), t.send(null), t.response.replace(/['"]+/g, "")
+    // return '127.0.0.1'
+    return t.open("GET", n, !1), t.send(null), t.response.replace(/['"]+/g, "")
 }
 
 function createImpression() {
@@ -656,8 +656,8 @@ function processFormData() {
         o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
-        h = '127.0.0.1',
-        // h = getIpAddress("https://loanieloans.com/api/get_ip"),
+        // h = '127.0.0.1',
+        h = getIpAddress("https://portal.loanieloans.com/api/get_ip"),
         // h = 'loanieloans.com'
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
@@ -788,8 +788,8 @@ function processFormDataSpecialOffer() {
         // o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
         s = dobToEpoch(),
         n = document.referrer,
-        h = '127.0.0.1',
-        // h = getIpAddress("https://loanieloans.com/api/geo/ip"),
+        // h = '127.0.0.1',
+        h = getIpAddress("https://portal.loanieloans.com/api/geo/ip"),
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
         followingPayDates = followingPayDate(),
@@ -834,9 +834,9 @@ function processFormDataSpecialOffer() {
         maxCommissionAmount: 0.00,
         source: {
             userAgent : window.navigator.userAgent,
-            ipAddress: '127.0.0.1:800',
-            creationUrl: 'https://loanie.co.uk',
-            referringUrl: 'https://loanie.co.uk',
+            ipAddress: h,
+            creationUrl: 'https://loanieloans.com',
+            referringUrl: 'https://loanieloans.com',
         },
         loan: {
             loanAmount: Number(document.getElementById("loanAmount").value.replace(/\D/g, "")),
