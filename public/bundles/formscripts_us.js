@@ -310,7 +310,6 @@ function handleSuccess() {
     form.classList.add("hide_element");
     progressDiv.classList.remove("hide_element");
     document.getElementsByTagName("body")[0].scrollIntoView({behavior: "auto"});
-    // n = "http://127.0.0.1:8001/api/application/usa/post";
     n = "https://portal.loanieloans.com/api/process";
     fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
         .then(n => n.json())
@@ -324,14 +323,12 @@ function handleSuccess() {
             debugger
             var i = "https://portal.loanieloans.com/api/check-lead-status/" + checkStatusID, t = setInterval(() => {
                 var r;
-                fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
-                        }
-                        return response.json();
-                    })
-                    .then(responseData => {
+                fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
+                    .then(n => n.json())
+                    .then(n => {
+                        responseData  = n;
+                        console.log('POST::', n)
+                        debugger
                         console.log('GET::', responseData);
                         debugger;
 
