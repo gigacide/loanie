@@ -304,63 +304,68 @@ function injectRedirectAsLink(n) {
 }
 
 function handleSuccess() {
-    var t = processFormData(), n;
-    console.log(t)
+    var t = processFormData();
+    console.log(t);
 
     form.classList.add("hide_element");
     progressDiv.classList.remove("hide_element");
-    document.getElementsByTagName("body")[0].scrollIntoView({behavior: "auto"});
-    n = "https://portal.loanieloans.com/api/process";
-    fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
+    document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
+
+    var n = "https://portal.loanieloans.com/api/process";
+    fetch(n, { method: "POST", headers: { "Content-Type": "application/json" }, body: t })
         .then(n => n.json())
         .then(n => {
-            console.log('POST::', n)
-            debugger
+            console.log('POST::', n);
+            debugger;
 
-            var checkStatusID = n[0].CheckStatusID
-            console.log('checkStatus ID::', checkStatusID)
-            console.log('POST::', n)
-            debugger
-            var i = "https://portal.loanieloans.com/api/check-lead-status/" + checkStatusID, t = setInterval(() => {
-                var r;
-                fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
-                    .then(n => n.json())
-                    .then(n => {
-                        console.log('POST::', n)
-                        debugger
+            var checkStatusID = n[0].CheckStatusID;
+            console.log('checkStatus ID::', checkStatusID);
+            debugger;
 
-                        const percentageComplete = n.PercentageComplete;
-                        const checkStatus = n.CheckStatus;
-                        const leadId = n.LeadId;
-                        const price = n.Price;
-                        const redirectUrl = n.RedirectUrl;
+            var i = `https://portal.loanieloans.com/api/check-lead-status/${checkStatusID}`,
+                t = setInterval(() => {
+                    var r;
+                    fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
+                        .then(n => n.json())
+                        .then(n => {
+                            r = n;
+                            console.log('GET::', r);
+                            debugger;
 
-                        console.log(percentageComplete, checkStatus, leadId, price, redirectUrl);
-                        debugger;
+                            var u = r[0].CheckStatusID,
+                                f = r[0].PercentageComplete,
+                                e = r[0].CheckStatus,
+                                i = r[0].RedirectURL;
+                            console.log(u);
+                            debugger;
 
-                        // Continue with your logic here using the variables
-                    })
-                    .catch(error => {
-                        // Handle any errors that occurred during the request
-                        console.error(error);
-                    });
+                            if (trackProgress(f), i) {
+                                console.warn("redirecting");
+                                progressDiv.classList.add("hide_element");
+                                countdownDiv.classList.remove("hide_element");
+                                startCountDown(u, i);
+                                trackFacebookConversion(r);
+                                trackGoogleConversion(r);
+                                trackBingConversion(u, r);
+                                clearInterval(t);
+                                return false;
+                            }
 
-                    // var u = r[0].CheckStatusID, f = r[0].PercentageComplete, e = r[0].CheckStatus, i = r[0].RedirectURL;
-                    // console.log(u)
-                    // debugger
-                    // if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
-                    // if (e == "NoLenderFound" || f == 100 && !i) {
-                    //     countdownDiv.classList.add("hide_element");
-                    //     console.warn("no lender");
-                    //     statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-                    //     clearInterval(t);
-                    //     return
-                    // }
-                // })
-            //
-            }, 2500);
+                            if (e === "NoLenderFound" || (f === 100 && !i)) {
+                                countdownDiv.classList.add("hide_element");
+                                console.warn("no lender");
+                                statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+                                clearInterval(t);
+                                return;
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }, 2500);
         });
 }
+
 
 
 
