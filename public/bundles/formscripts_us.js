@@ -351,12 +351,12 @@ function handleSuccess() {
                     r = n;
 
                         // Access the properties in the response data
-                        var percentageComplete = n.PercentageComplete;
-                        var status = n.Status;
-                        var leadId = n.LeadId;
-                        var price = n.Price;
-                        var redirectUrl = n.RedirectUrl;
-                        var checkStatusID = n.CheckStatusID;
+                        var percentageComplete = n[0].PercentageComplete;
+                        var status = n.[0]Status;
+                        var leadId = n.[0]LeadId;
+                        var price = n.[0]Price;
+                        var redirectUrl = n.[0]RedirectUrl;
+                        var checkStatusID = n.[0]CheckStatusID;
 
                     var u = checkStatusID,
                         f = percentageComplete,
