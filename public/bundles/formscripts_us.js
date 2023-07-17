@@ -326,6 +326,8 @@ function handleSuccess() {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
+                    console.log('GET::', r)
+                    debugger
 
                     var u = r[0].CheckStatusID, f = r[0].PercentageComplete, e = r[0].CheckStatus, i = r[0].RedirectURL;
                     console.log(u)
