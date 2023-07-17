@@ -304,113 +304,67 @@ function injectRedirectAsLink(n) {
 }
 
 function handleSuccess() {
-    var requestBody = processFormData();
-    console.log(requestBody);
+    var t = processFormData(), n;
+    console.log(t)
 
     form.classList.add("hide_element");
     progressDiv.classList.remove("hide_element");
-    document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
-
-    const url = "https://portal.loanieloans.com/api/process";
-
-    fetch(url, {
-        method: "POST",
-        mode: "cors", // Set the mode to 'cors' for CORS requests
-        credentials: "same-origin", // Set the credentials to 'same-origin' to include cookies in the request (if applicable)
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: requestBody
-    })
-        .then(response => response.json())
-        .then(responseData => {
-            console.log('POST::', responseData)
-            debugger
-            const response = responseData;
-
-            // Access the properties in the response data
-            var percentageComplete = response[0].PercentageComplete;
-            var checkStatusID = response[0].CheckStatusID;
-            var checkStatus = response[0].CheckStatus;
-            var leadID = response[0].Leadid;
-            var checkStatusURL = response[0].CheckStatusURL;
-            var redirectURL = response[0].RedirectURL;
-
-             console.log(redirectURL, checkStatusURL, checkStatus, percentageComplete, checkStatus, leadID);
+    document.getElementsByTagName("body")[0].scrollIntoView({behavior: "auto"});
+    // n = "http://127.0.0.1:8001/api/application/usa/post";
+    n = "https://loanieloans.com/api/process";
+    fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
+        .then(n => n.json())
+        .then(n => {
+            console.log('POST::', n)
             debugger
 
+            var checkStatusID = n.CheckStatusID
             console.log('checkStatus ID::', checkStatusID)
-            console.log('POST::', response)
+            console.log('POST::', n)
             debugger
-
-            console.log("Before sleep");
-
-
-            //https://portal.loanieloans.com/api/check-lead-status/aaa27fad-d194-4c01-b3a8-0acdd1127dd8
-
-            var i = 'https://portal.loanieloans.com/api/check-lead-status/' + checkStatusID,
-                t = setInterval(() => {
+            var i = "https://loanieloans.comcheck-status/" + checkStatusID, t = setInterval(() => {
                 var r;
-                    fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
-                        .then(response => {
-                            setTimeout(() => {
-                                console.log("After sleep");
-                            }, 5000);
-                            console.log(response)
-                            console.log(response)
-                            debugger
+                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
+                    r = n;
 
-                            if (!response.ok) {
-                                throw new Error("Network response was not ok");
-                            }
-                            // return response.json();
-                        })
-                        .then(data => {
-
-                        r = data;
-                        console.log(r)
-                        console.log(r[0])
-                        console.log('here')
-
-                        // Access the properties in the response data
-                        var percentageComplete = r[0].PercentageComplete;
-                        var status = r[0].Status;
-                        var leadId = r[0].LeadId;
-                        var price = r[0].Price;
-                        var redirectUrl = r[0].RedirectUrl;
-                        var checkStatusID = r[0].CheckStatusID;
-
-                    var u = checkStatusID,
-                        f = percentageComplete,
-                        e = status,
-                        i = redirectUrl,
-                        x = leadId,
-                        y = price;
-                    console.log(u,f, e, i, x , y)
-                    console.log('here')
+                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.check_status, i = r.RedirectURL;
+                    console.log(u)
                     debugger
-                    if (trackProgress(f), i)
-                        return
-                        console.warn("redirecting"),
-                        progressDiv.classList.add("hide_element"),
-                        countdownDiv.classList.remove("hide_element"),
-                        startCountDown(u, i),
-                        // trackFacebookConversion(r),
-                        // trackGoogleConversion(r),
-                        // trackBingConversion(u, r),
-                        clearInterval(t),
-                        !1;
-                    if (e == "Rejected" || f == 100 && !i) {
+                    if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
+                    if (e == "NoLenderFound" || f == 100 && !i) {
                         countdownDiv.classList.add("hide_element");
                         console.warn("no lender");
                         statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
                         clearInterval(t);
                         return
                     }
+                }).catch(i => {
+                    var o = n, e;
+                    clearInterval(t);
+                    var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
+                        f = o.Errors;
+                    console.log(f);
+                    u.innerHTML = "";
+                    f.forEach(function (n) {
+                        return u.innerHTML += "<p>" + n + "<\/p>"
+                    });
+                    r.classList.remove("hide_element");
+                    progressDiv.classList.add("hide_element");
+                    form.classList.remove("hide_element");
+                    e = document.querySelectorAll(".tab");
+                    e.forEach(n => {
+                        n.style.display = "block"
+                    });
+                    r.scrollIntoView();
+                    window.scrollBy({top: -200, behavior: "smooth"});
+                    console.error("Error:", i)
                 })
             }, 2500)
-        });
+        }).catch(n => {
+        console.error("Error:", n)
+    })
 }
+
 
 function handleSold(responseData) {
     const leadID = responseData.LeadID;
