@@ -334,7 +334,7 @@ function handleSuccess() {
              console.log(redirectURL, checkStatusURL, checkStatus, percentageComplete, checkStatus, leadID);
             debugger
 
-            console.log('checkStatus ID::', response[0].CheckStatusID)
+            console.log('checkStatus ID::', checkStatusID)
             console.log('POST::', response)
             debugger
 
