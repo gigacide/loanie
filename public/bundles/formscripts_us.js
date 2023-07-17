@@ -343,7 +343,7 @@ function handleSuccess() {
                             f = response.PercentageComplete,
                             e = response.CheckStatus,
                             x = response.Status,
-                            i = response.RedirectURL;
+                            i = response.RedirectUrl;
 
                         console.log(e)
                         debugger
