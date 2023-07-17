@@ -319,9 +319,9 @@ function handleSuccess() {
     })
         .then(response => response.json())
         .then(responseData => {
-            console.log('POST::', responseData.data)
+            console.log('POST::', responseData)
             debugger
-            const response = responseData.data;
+            const response = responseData;
             // Access the properties in the response data
             const percentageComplete = response[0].PercentageComplete;
             const checkStatusID = response[0].CheckStatusID;
