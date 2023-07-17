@@ -341,7 +341,7 @@ function handleSuccess() {
             var i = checkStatusURL, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
-                    r = response;
+                    r = response[0];
 
                     var u = checkStatusID,
                         f = percentageComplete,
