@@ -354,10 +354,15 @@ function handleSuccess() {
                 t = setInterval(() => {
                 var r;
                     fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
-                        .then(n => n.json())
-                        .then(n => {
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
 
-                        r = n;
+                        r = data;
                         console.log(r)
                         console.log(r[0])
                         console.log('here')
