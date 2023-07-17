@@ -329,12 +329,12 @@ function handleSuccess() {
             const response = responseData;
 
             // Access the properties in the response data
-            const percentageComplete = response[0].PercentageComplete;
-            const checkStatusID = response[0].CheckStatusID;
-            const checkStatus = response[0].CheckStatus;
-            const leadID = response[0].Leadid;
-            const checkStatusURL = response[0].CheckStatusURL;
-            const redirectURL = response[0].RedirectURL;
+            var percentageComplete = response[0].PercentageComplete;
+            var checkStatusID = response[0].CheckStatusID;
+            var checkStatus = response[0].CheckStatus;
+            var leadID = response[0].Leadid;
+            var checkStatusURL = response[0].CheckStatusURL;
+            var redirectURL = response[0].RedirectURL;
 
              console.log(redirectURL, checkStatusURL, checkStatus, percentageComplete, checkStatus, leadID);
             debugger
@@ -352,11 +352,11 @@ function handleSuccess() {
 
                         // Access the properties in the response data
                         var percentageComplete = n[0].PercentageComplete;
-                        var status = n.[0]Status;
-                        var leadId = n.[0]LeadId;
-                        var price = n.[0]Price;
-                        var redirectUrl = n.[0]RedirectUrl;
-                        var checkStatusID = n.[0]CheckStatusID;
+                        var status = n[0].Status;
+                        var leadId = n[0].LeadId;
+                        var price = n[0].Price;
+                        var redirectUrl = n[0].RedirectUrl;
+                        var checkStatusID = n.CheckStatusID;
 
                     var u = checkStatusID,
                         f = percentageComplete,
