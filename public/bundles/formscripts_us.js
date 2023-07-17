@@ -345,7 +345,6 @@ function handleSuccess() {
                             const status = json.Status;
                             const leadId = json.LeadId;
                             const price = json.Price;
-                            const price = json.Price;
                             const redirectUrl = json.RedirectUrl;
 
                             console.log(leadId)
