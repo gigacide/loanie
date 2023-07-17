@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\ItMediaApiService;
 use App\Services\LoanApplicationService;
+use App\Services\LoanieApiService;
 use App\Services\PostbackService;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LoanApplicationService::class, function ($app) {
-            return new LoanApplicationService(new Client(), new ItMediaApiService());
+            return new LoanApplicationService(new Client(), new LoanieApiService());
         });
 
         $this->app->singleton(ItMediaApiService::class, function ($app) {

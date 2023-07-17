@@ -327,7 +327,7 @@ function handleSuccess() {
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
 
-                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.check_status, i = r.RedirectURL;
+                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.CheckStatus, i = r.RedirectURL;
                     console.log(u)
                     debugger
                     if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
