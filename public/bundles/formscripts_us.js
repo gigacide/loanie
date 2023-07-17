@@ -326,7 +326,7 @@ function handleSuccess() {
             var i = CheckStatusURL;
                 t = setInterval(() => {
                     var r;
-                    fetch(n, { method: "GET", headers: { "Content-Type": "application/json" } })
+                    fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } })
                         .then(n => n.json())
                         .then(n => {
                             console.log('POST::', n);
