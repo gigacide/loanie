@@ -327,15 +327,30 @@ function handleSuccess() {
                 t = setInterval(() => {
                     var r;
                     var url = `https://portal.loanieloans.com/api/check-lead-status/${checkStatusID}`;
-                    fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } })
-                        .then(n => n.json())
-                        .then(n => {
-                            console.log('here');
-                            console.log('POST::', n);
-                            r = JSON.parse(n)
-                            debugger;
-                            console.log('PARSED::', r);
-                            debugger;
+                    fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => response.text()) // Parse the response as text
+                        .then(responseData => {
+                            // Parse the response data manually as JSON
+                            const json = JSON.parse(responseData);
+
+                            console.log(json)
+                            debugger
+                            // Access the properties in the JSON data
+                            const percentageComplete = json.PercentageComplete;
+                            const status = json.Status;
+                            const leadId = json.LeadId;
+                            const price = json.Price;
+                            const price = json.Price;
+                            const redirectUrl = json.RedirectUrl;
+
+                            console.log(leadId)
+                            console.log(status)
+                            debugger
 
                             var u = r.CheckStatusID,
                                 f = r.PercentageComplete,
