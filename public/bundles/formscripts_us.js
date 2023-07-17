@@ -343,7 +343,7 @@ function handleSuccess() {
             console.log('POST::', response)
             debugger
 
-            var i = checkStatusURL, t = setInterval(() => {
+            var i = 'https://portal.loanieloans.com/api/check-lead-status/' + checkStatusID, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}})
                     .then(n => n.json())
