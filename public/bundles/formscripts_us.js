@@ -327,27 +327,23 @@ function handleSuccess() {
                 t = setInterval(() => {
                     var r;
                     var url = `https://portal.loanieloans.com/api/check-lead-status/${checkStatusID}`;
-                    fetch(url, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                    fetch(url, {method: 'GET', headers: { 'Content-Type': 'application/json'}
                     })
-                        .then(response => response.json()) // Parse the response as text
-                        .then(responseData => {
-                            console.log(responseData)
+                        .then(response => response.json())
+                        .then(response => {
+                            console.log('123', response)
                             debugger
                             // Parse the response data manually as JSON
-                            const json = JSON.parse(responseData);
-
-                            console.log(json)
-                            debugger
+                            // const json = JSON.parse(response);
+                            //
+                            // console.log(json)
+                            // debugger
                             // Access the properties in the JSON data
-                            const percentageComplete = json.PercentageComplete;
-                            const status = json.Status;
-                            const leadId = json.LeadId;
-                            const price = json.Price;
-                            const redirectUrl = json.RedirectUrl;
+                            const percentageComplete = response.PercentageComplete;
+                            const status = response.Status;
+                            const leadId = response.LeadId;
+                            const price = response.Price;
+                            const redirectUrl = response.RedirectUrl;
 
                             console.log(leadId)
                             console.log(status)
