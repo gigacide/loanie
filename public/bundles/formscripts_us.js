@@ -344,6 +344,8 @@ function handleSuccess() {
                             e = response.CheckStatus,
                             i = response.RedirectURL;
 
+                        console.log(e)
+                        debugger
                         if (e === 'Sold') {
                             if (trackProgress(f), i) {
                                 console.warn("redirecting");
