@@ -338,37 +338,36 @@ function handleSuccess() {
                         const price = response.Price;
                         const redirectUrl = response.RedirectUrl;
 
-                        debugger
-                        console.log(leadId)
-                        console.log(status)
-                        debugger
 
                         var u = response.CheckStatusID,
                             f = response.PercentageComplete,
                             e = response.CheckStatus,
                             i = response.RedirectURL;
-                        console.log(u);
-                        debugger;
 
-                        if (trackProgress(f), i) {
-                            console.warn("redirecting");
-                            progressDiv.classList.add("hide_element");
-                            countdownDiv.classList.remove("hide_element");
-                            startCountDown(u, i);
-                            trackFacebookConversion(r);
-                            trackGoogleConversion(r);
-                            trackBingConversion(u, r);
-                            clearInterval(t);
-                            return false;
+                        if (e === 'Sold') {
+                            if (trackProgress(f), i) {
+                                console.warn("redirecting");
+                                progressDiv.classList.add("hide_element");
+                                countdownDiv.classList.remove("hide_element");
+                                startCountDown(u, i);
+                                // trackFacebookConversion(r);
+                                // trackGoogleConversion(r);
+                                // trackBingConversion(u, r);
+                                clearInterval(t);
+                                return false;
+                            }
                         }
 
-                        if (e === "NoLenderFound" || (f === 100 && !i)) {
+                        if (e === "Rejected" || (f === 100 && !i)) {
                             countdownDiv.classList.add("hide_element");
                             console.warn("no lender");
                             statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
                             clearInterval(t);
                             return;
                         }
+
+
+
 
 
                     })
