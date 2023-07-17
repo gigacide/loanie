@@ -3688,9 +3688,9 @@ jQuery(document).ready(function (n) {
 });
 var getUrl = window.location, baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split("/")[1],
     uping = {
-        iframeSrc: "https://127.0.0.1:8000/api/application/usa/post",
-        mobileFormSrc: "https://127.0.0.1:8000/api/application/usa/post",
-        defaultAffiliate: "AFF_UP151",
+        iframeSrc: "https://portal.loanieloans.com/api/process",
+        mobileFormSrc: "https://portal.loanieloans.com/api/process",
+        defaultAffiliate: "0001",
         defaultSubAffiliate: null,
         defaultCampaign: null,
         defaultSiteAffiliate: null,
