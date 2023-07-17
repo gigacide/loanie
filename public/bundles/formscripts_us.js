@@ -331,51 +331,47 @@ function handleSuccess() {
                 fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ correlationId }) })
                     .then(response => response.json())
                     .then(response => {
-                        console.log('123', response);
                         // Rest of your code here
+                        const percentageComplete = response.PercentageComplete;
+                        const status = response.Status;
+                        const leadId = response.LeadId;
+                        const price = response.Price;
+                        const redirectUrl = response.RedirectUrl;
+
+                        debugger
+                        console.log(leadId)
+                        console.log(status)
+                        debugger
+
+                        var u = response.CheckStatusID,
+                            f = response.PercentageComplete,
+                            e = response.CheckStatus,
+                            i = response.RedirectURL;
+                        console.log(u);
+                        debugger;
+
+                        if (trackProgress(f), i) {
+                            console.warn("redirecting");
+                            progressDiv.classList.add("hide_element");
+                            countdownDiv.classList.remove("hide_element");
+                            startCountDown(u, i);
+                            trackFacebookConversion(r);
+                            trackGoogleConversion(r);
+                            trackBingConversion(u, r);
+                            clearInterval(t);
+                            return false;
+                        }
+
+                        if (e === "NoLenderFound" || (f === 100 && !i)) {
+                            countdownDiv.classList.add("hide_element");
+                            console.warn("no lender");
+                            statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+                            clearInterval(t);
+                            return;
+                        }
+
+
                     })
-                            // Parse the response data manually as JSON
-                            // const json = JSON.parse(response);
-                            //
-                            // console.log(json)
-                            // debugger
-                            // Access the properties in the JSON data
-                            const percentageComplete = response.PercentageComplete;
-                            const status = response.Status;
-                            const leadId = response.LeadId;
-                            const price = response.Price;
-                            const redirectUrl = response.RedirectUrl;
-
-                            console.log(leadId)
-                            console.log(status)
-                            debugger
-
-                            // var u = r.CheckStatusID,
-                            //     f = r.PercentageComplete,
-                            //     e = r.CheckStatus,
-                            //     i = r.RedirectURL;
-                            // console.log(u);
-                            // debugger;
-                            //
-                            // if (trackProgress(f), i) {
-                            //     console.warn("redirecting");
-                            //     progressDiv.classList.add("hide_element");
-                            //     countdownDiv.classList.remove("hide_element");
-                            //     startCountDown(u, i);
-                            //     trackFacebookConversion(r);
-                            //     trackGoogleConversion(r);
-                            //     trackBingConversion(u, r);
-                            //     clearInterval(t);
-                            //     return false;
-                            // }
-
-                            // if (e === "NoLenderFound" || (f === 100 && !i)) {
-                            //     countdownDiv.classList.add("hide_element");
-                            //     console.warn("no lender");
-                            //     statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-                            //     clearInterval(t);
-                            //     return;
-                            // }
 
                 }, 2500);
         });
