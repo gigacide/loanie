@@ -323,11 +323,11 @@ function handleSuccess() {
             debugger
             n = responseData;
 
-            var checkStatusID = n.CheckStatusID
-            console.log('checkStatus ID::', checkStatusID)
+            var CheckStatusID = n.CheckStatusID
+            console.log('checkStatus ID::', n.CheckStatusID)
             console.log('POST::', n)
             debugger
-            var i = "https://portal.loanieloans.com/check-lead-status/" + checkStatusID, t = setInterval(() => {
+            var i = "https://portal.loanieloans.com/check-lead-status/" + CheckStatusID, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
