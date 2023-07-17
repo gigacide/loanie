@@ -345,7 +345,8 @@ function handleSuccess() {
                             x = response.Status,
                             i = response.RedirectUrl;
 
-                        console.log(e)
+                        x = 'Rejected'
+                        console.log(x)
                         debugger
                         if (x === 'Sold') {
                             if (trackProgress(f), i) {
