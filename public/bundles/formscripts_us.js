@@ -354,9 +354,10 @@ function handleSuccess() {
                         return
                     }
                 }).catch(i => {
-                    var o = r, e;
+                    var o = r,
+                            e;
                     clearInterval(t);
-                    // var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
+                    var r = document.getElementById("error-list"), u = document.getElementById("inject-errors");
                     //     f = o.Errors;
                     // console.log(f);
                     // u.innerHTML = "";
@@ -366,13 +367,14 @@ function handleSuccess() {
                     r.classList.remove("hide_element");
                     progressDiv.classList.add("hide_element");
                     form.classList.remove("hide_element");
-                    e = document.querySelectorAll(".tab");
-                    e.forEach(n => {
-                        n.style.display = "block"
-                    });
-                    r.scrollIntoView();
-                    window.scrollBy({top: -200, behavior: "smooth"});
+                    // e = document.querySelectorAll(".tab");
+                    // e.forEach(n => {
+                    //     n.style.display = "block"
+                    // });
+                    // r.scrollIntoView();
+                    // window.scrollBy({top: -200, behavior: "smooth"});
                     console.error("Error:", i)
+                    console.error("Error:", r)
                 })
             }, 2500)
         });
