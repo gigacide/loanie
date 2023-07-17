@@ -315,32 +315,35 @@ function handleSuccess() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: requestBody
+        body: JSON.stringify(requestBody)
     })
         .then(response => response.json())
         .then(responseData => {
             console.log('POST::', responseData)
             debugger
             const response = responseData;
+
             // Access the properties in the response data
             const percentageComplete = response[0].PercentageComplete;
             const checkStatusID = response[0].CheckStatusID;
             const checkStatus = response[0].CheckStatus;
             const leadID = response[0].Leadid;
             const checkStatusURL = response[0].CheckStatusURL;
+
             console.log('checkStatus ID::', response[0].CheckStatusID)
             console.log('POST::', response)
             debugger
+
             var i = checkStatusURL, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = response;
 
-                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.CheckStatus, i = r.RedirectURL;
+                    var u = r.checkStatusID, f = r.percentageComplete, e = r.checkStatus, i = r.RedirectURL;
                     console.log(u)
                     debugger
                     if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
-                    if (e == "NoLenderFound" || f == 100 && !i) {
+                    if (e == "Rejected" || f == 100 && !i) {
                         countdownDiv.classList.add("hide_element");
                         console.warn("no lender");
                         statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
