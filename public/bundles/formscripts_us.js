@@ -325,7 +325,12 @@ function handleSuccess() {
             var i = "https://portal.loanieloans.com/api/check-lead-status/" + checkStatusID, t = setInterval(() => {
                 var r;
                 fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
-                    .then(n => n.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
                     .then(responseData => {
                         console.log('GET::', responseData);
                         debugger;
