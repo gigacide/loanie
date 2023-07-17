@@ -318,7 +318,7 @@ function handleSuccess() {
             console.log('POST::', n)
             debugger
 
-            var checkStatusID = n.[0]CheckStatusID
+            var checkStatusID = n[0].CheckStatusID
             console.log('checkStatus ID::', checkStatusID)
             console.log('POST::', n)
             debugger
@@ -327,7 +327,7 @@ function handleSuccess() {
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
 
-                    var u = r.CheckStatusID, f = r.PercentageComplete, e = r.CheckStatus, i = r.RedirectURL;
+                    var u = r[0].CheckStatusID, f = r[0].PercentageComplete, e = r[0].CheckStatus, i = r[0].RedirectURL;
                     console.log(u)
                     debugger
                     if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
