@@ -326,17 +326,14 @@ function handleSuccess() {
                 fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
                     .then(n => n.json())
                     .then(n => {
-                        var responseData  = n;
                         console.log('POST::', n)
                         debugger
-                        console.log('GET::', responseData);
-                        debugger;
 
-                        const percentageComplete = responseData.PercentageComplete;
-                        const checkStatus = responseData.CheckStatus;
-                        const leadId = responseData.LeadId;
-                        const price = responseData.Price;
-                        const redirectUrl = responseData.RedirectUrl;
+                        const percentageComplete = n.PercentageComplete;
+                        const checkStatus = n.CheckStatus;
+                        const leadId = n.LeadId;
+                        const price = n.Price;
+                        const redirectUrl = n.RedirectUrl;
 
                         console.log(percentageComplete, checkStatus, leadId, price, redirectUrl);
                         debugger;
