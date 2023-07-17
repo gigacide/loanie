@@ -348,7 +348,7 @@ function handleSuccess() {
                         return
                     }
                 }).catch(i => {
-                    var o = n, e;
+                    var o = response, e;
                     clearInterval(t);
                     var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
                         f = o.Errors;
