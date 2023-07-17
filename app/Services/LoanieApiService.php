@@ -18,7 +18,7 @@ class LoanieApiService
     public function __construct()
     {
         $this->client = new Client();
-        $this->url = 'http://127.0.0.1:8000/api/process'; //live
+        $this->url = 'https://portal.loanieloans.com/api/process'; //live
     }
 
     /**
@@ -31,7 +31,7 @@ class LoanieApiService
             $this->client = new Client();
         }
         if ($this->url === null) {
-            $this->url = 'http://127.0.0.1:8000/api/process'; //live
+            $this->url = 'https://portal.loanieloans.com/api/process'; //live
 
         }
 
