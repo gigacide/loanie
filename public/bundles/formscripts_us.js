@@ -347,7 +347,7 @@ function handleSuccess() {
 
             setTimeout(() => {
                 console.log("After sleep");
-            }, 5000);
+            }, 3000);
 
             var i = 'https://portal.loanieloans.com/api/check-lead-status/' + checkStatusID,
                 t = setInterval(() => {
@@ -355,6 +355,10 @@ function handleSuccess() {
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}})
                     .then(n => n.json())
                     .then(n => {
+                        setTimeout(() => {
+                            console.log("After sleep");
+                        }, 3000);
+
                     r = n;
                         console.log(r)
                         console.log(n)
