@@ -315,7 +315,7 @@ function handleSuccess() {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(requestBody)
+        body: requestBody
     })
         .then(response => response.json())
         .then(responseData => {
