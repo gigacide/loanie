@@ -356,13 +356,13 @@ function handleSuccess() {
                 }).catch(i => {
                     var o = response, e;
                     clearInterval(t);
-                    var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
-                        f = o.Errors;
-                    console.log(f);
-                    u.innerHTML = "";
-                    f.forEach(function (n) {
-                        return u.innerHTML += "<p>" + n + "<\/p>"
-                    });
+                    // var r = document.getElementById("error-list"), u = document.getElementById("inject-errors"),
+                    //     f = o.Errors;
+                    // console.log(f);
+                    // u.innerHTML = "";
+                    // f.forEach(function (n) {
+                    //     return u.innerHTML += "<p>" + n + "<\/p>"
+                    // });
                     r.classList.remove("hide_element");
                     progressDiv.classList.add("hide_element");
                     form.classList.remove("hide_element");
