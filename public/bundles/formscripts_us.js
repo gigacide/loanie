@@ -350,11 +350,21 @@ function handleSuccess() {
                     .then(n => {
                     r = n;
 
-                    var u = n.checkStatusID,
-                        f = n.percentageComplete,
-                        e = n.checkStatus,
-                        i = n.redirectURL;
-                    console.log(u,f, e, i)
+                        // Access the properties in the response data
+                        var percentageComplete = n.PercentageComplete;
+                        var status = n.Status;
+                        var leadId = n.LeadId;
+                        var price = n.Price;
+                        var redirectUrl = n.RedirectUrl;
+                        var checkStatusID = n.CheckStatusID;
+
+                    var u = checkStatusID,
+                        f = percentageComplete,
+                        e = status,
+                        i = redirectUrl,
+                        x = leadId,
+                        y = price;
+                    console.log(u,f, e, i, x , y)
                     debugger
                     if (trackProgress(f), i)
                         return
