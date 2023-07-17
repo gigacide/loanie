@@ -327,7 +327,7 @@ function handleSuccess() {
                 t = setInterval(() => {
                     var r;
                     var corid = checkStatusID;
-                    var url = `https://portal.loanieloans.com/api/check-lead-status/${checkStatusID}`;
+                    var url = `https://portal.loanieloans.com/api/check-lead-status`;
                     fetch(url, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: corid})
                         .then(response => response.json())
                         .then(response => {
