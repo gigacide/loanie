@@ -311,7 +311,7 @@ function handleSuccess() {
     progressDiv.classList.remove("hide_element");
     document.getElementsByTagName("body")[0].scrollIntoView({behavior: "auto"});
     // n = "http://127.0.0.1:8001/api/application/usa/post";
-    n = "https://loanieloans.com/api/process";
+    n = "https://portal.loanieloans.com/api/process";
     fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
         .then(n => n.json())
         .then(n => {
@@ -322,7 +322,7 @@ function handleSuccess() {
             console.log('checkStatus ID::', checkStatusID)
             console.log('POST::', n)
             debugger
-            var i = "https://loanieloans.comcheck-status/" + checkStatusID, t = setInterval(() => {
+            var i = "https://portal.loanieloans.com/api/check-status/" + checkStatusID, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
                     r = n;
