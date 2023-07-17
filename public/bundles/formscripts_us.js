@@ -319,8 +319,9 @@ function handleSuccess() {
     })
         .then(response => response.json())
         .then(responseData => {
-            console.log('POST::', n)
+            console.log('POST::', responseData)
             debugger
+            n = responseData;
 
             var checkStatusID = n.CheckStatusID
             console.log('checkStatus ID::', checkStatusID)
