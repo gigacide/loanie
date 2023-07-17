@@ -348,12 +348,14 @@ function handleSuccess() {
             setTimeout(() => {
                 console.log("After sleep");
             }, 3000);
+            //https://portal.loanieloans.com/api/check-lead-status/aaa27fad-d194-4c01-b3a8-0acdd1127dd8
 
             var i = 'https://portal.loanieloans.com/api/check-lead-status/' + checkStatusID,
                 t = setInterval(() => {
                 var r;
-                fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}})
-                    .then(n => n.json())
+                fetch(i,
+                    {method: "GET", headers: {"Content-Type": "application/json"}})
+                    // .then(n => n.json())
                     .then(n => {
                         setTimeout(() => {
                             console.log("After sleep");
