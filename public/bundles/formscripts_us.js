@@ -331,6 +331,9 @@ function handleSuccess() {
             const checkStatusURL = response[0].CheckStatusURL;
             const redirectURL = response[0].RedirectURL;
 
+             console.log(redirectURL, checkStatusURL, checkStatus, percentageComplete, checkStatus, leadID);
+            debugger
+
             console.log('checkStatus ID::', response[0].CheckStatusID)
             console.log('POST::', response)
             debugger
@@ -346,7 +349,16 @@ function handleSuccess() {
                         i = redirectURL;
                     console.log(u,f, e, i)
                     debugger
-                    if (trackProgress(f), i) return console.warn("redirecting"), progressDiv.classList.add("hide_element"), countdownDiv.classList.remove("hide_element"), startCountDown(u, i), trackFacebookConversion(r), trackGoogleConversion(r), trackBingConversion(u, r), clearInterval(t), !1;
+                    if (trackProgress(f), i) return
+                        console.warn("redirecting"),
+                        progressDiv.classList.add("hide_element"),
+                        countdownDiv.classList.remove("hide_element"),
+                        startCountDown(u, i),
+                        // trackFacebookConversion(r),
+                        // trackGoogleConversion(r),
+                        // trackBingConversion(u, r),
+                        clearInterval(t),
+                        !1;
                     if (e == "Rejected" || f == 100 && !i) {
                         countdownDiv.classList.add("hide_element");
                         console.warn("no lender");
@@ -374,8 +386,8 @@ function handleSuccess() {
                     // });
                     // r.scrollIntoView();
                     // window.scrollBy({top: -200, behavior: "smooth"});
-                    console.error("Error:", i)
-                    console.error("Error:", r)
+                    console.error("Error:", o)
+                    // console.error("Error:", r)
                 })
             }, 2500)
         });
