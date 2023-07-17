@@ -319,10 +319,11 @@ function handleSuccess() {
             debugger;
 
             var checkStatusID = n.CheckStatusID;
+            var CheckStatusURL = n.CheckStatusURL;
             console.log('checkStatus ID::', checkStatusID);
             debugger;
 
-            var i = `https://portal.loanieloans.com/api/check-lead-status/` + checkStatusID,
+            var i = CheckStatusURL;
                 t = setInterval(() => {
                     var r;
                     fetch(n, { method: "GET", headers: { "Content-Type": "application/json" } })
