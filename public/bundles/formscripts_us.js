@@ -345,8 +345,8 @@ function handleSuccess() {
                             x = response.Status,
                             i = response.RedirectUrl;
 
-                        x = 'Rejected'
-                        console.log(x)
+                        // x = 'Rejected'
+                        // console.log(x)
                         debugger
                         if (x === 'Sold') {
                             if (trackProgress(f), i) {
@@ -3778,7 +3778,7 @@ String.prototype.startsWith || (String.prototype.startsWith = function (n, t) {
 // };
 validate.validators.dobValidator = function (n, t) {
     var r = t.trim().replace(/^\/|\/$/g, ""), i = parseInt(moment(t, "M/D/YYYY", !0).fromNow()),
-        u = /^([1-9]|0?[1-9]|[1-3]{1}[0-9]{1})\/([1-9]|0?[1-9]|[1]{1}[0-2])\/(19|20)[0-9]{2}$/.test(r) && i >= 18 && i <= 110;
+        u = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/.test(r) && i >= 18 && i <= 110;
     return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
 };
 // validate.validators.sortCodeValidator = function (n, t) {
