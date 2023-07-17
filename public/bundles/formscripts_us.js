@@ -318,7 +318,7 @@ function handleSuccess() {
             console.log('POST::', n);
             debugger;
 
-            var checkStatusID = n[0].CheckStatusID;
+            var checkStatusID = n.CheckStatusID;
             console.log('checkStatus ID::', checkStatusID);
             debugger;
 
