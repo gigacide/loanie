@@ -349,6 +349,9 @@ function handleSuccess() {
                     .then(n => n.json())
                     .then(n => {
                     r = n;
+                        console.log(r)
+                        console.log(n)
+                        console.log('here')
 
                         // Access the properties in the response data
                         var percentageComplete = n[0].PercentageComplete;
@@ -365,6 +368,7 @@ function handleSuccess() {
                         x = leadId,
                         y = price;
                     console.log(u,f, e, i, x , y)
+                    console.log('here')
                     debugger
                     if (trackProgress(f), i)
                         return
