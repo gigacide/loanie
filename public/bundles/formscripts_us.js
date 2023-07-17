@@ -355,23 +355,20 @@ function handleSuccess() {
                 var r;
                     fetch(i, { method: "GET", headers: { "Content-Type": "application/json" } })
                         .then(n => n.json())
-                        .then(data => {
-                        setTimeout(() => {
-                            console.log("After sleep");
-                        }, 3000);
+                        .then(n => {
 
-                    r = n;
+                        r = n;
                         console.log(r)
-                        console.log(n)
+                        console.log(r[0])
                         console.log('here')
 
                         // Access the properties in the response data
-                        var percentageComplete = n[0].PercentageComplete;
-                        var status = n[0].Status;
-                        var leadId = n[0].LeadId;
-                        var price = n[0].Price;
-                        var redirectUrl = n[0].RedirectUrl;
-                        var checkStatusID = n.CheckStatusID;
+                        var percentageComplete = r[0].PercentageComplete;
+                        var status = r[0].Status;
+                        var leadId = r[0].LeadId;
+                        var price = r[0].Price;
+                        var redirectUrl = r[0].RedirectUrl;
+                        var checkStatusID = r[0].CheckStatusID;
 
                     var u = checkStatusID,
                         f = percentageComplete,
