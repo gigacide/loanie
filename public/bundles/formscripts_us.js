@@ -342,11 +342,12 @@ function handleSuccess() {
                         var u = response.CheckStatusID,
                             f = response.PercentageComplete,
                             e = response.CheckStatus,
+                            x = response.Status,
                             i = response.RedirectURL;
 
                         console.log(e)
                         debugger
-                        if (e === 'Sold') {
+                        if (x === 'Sold') {
                             if (trackProgress(f), i) {
                                 console.warn("redirecting");
                                 progressDiv.classList.add("hide_element");
@@ -360,7 +361,7 @@ function handleSuccess() {
                             }
                         }
 
-                        if (e === "Rejected" || (f === 100 && !i)) {
+                        if (x === "Rejected" || (f === 100 && !i)) {
                             countdownDiv.classList.add("hide_element");
                             console.warn("no lender");
                             statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
