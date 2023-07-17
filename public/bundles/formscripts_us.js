@@ -326,7 +326,7 @@ function handleSuccess() {
                 fetch(n, {method: "POST",headers: {"Content-Type": "application/json"}, body: t})
                     .then(n => n.json())
                     .then(n => {
-                        responseData  = n;
+                        var responseData  = n;
                         console.log('POST::', n)
                         debugger
                         console.log('GET::', responseData);
