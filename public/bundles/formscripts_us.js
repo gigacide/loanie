@@ -319,18 +319,22 @@ function handleSuccess() {
     })
         .then(response => response.json())
         .then(responseData => {
-            console.log('POST::', responseData)
+            console.log('POST::', responseData.data)
             debugger
-            n = responseData;
-
-            var CheckStatusID = n.CheckStatusID
-            console.log('checkStatus ID::', n.CheckStatusID)
-            console.log('POST::', n)
+            const response = responseData.data;
+            // Access the properties in the response data
+            const percentageComplete = response[0].PercentageComplete;
+            const checkStatusID = response[0].CheckStatusID;
+            const checkStatus = response[0].CheckStatus;
+            const leadID = response[0].Leadid;
+            const checkStatusURL = response[0].CheckStatusURL;
+            console.log('checkStatus ID::', response[0].CheckStatusID)
+            console.log('POST::', response)
             debugger
-            var i = "https://portal.loanieloans.com/check-lead-status/" + CheckStatusID, t = setInterval(() => {
+            var i = checkStatusURL, t = setInterval(() => {
                 var r;
                 fetch(i, {method: "GET", headers: {"Content-Type": "application/json"}}).then(n => n.json()).then(n => {
-                    r = n;
+                    r = response;
 
                     var u = r.CheckStatusID, f = r.PercentageComplete, e = r.CheckStatus, i = r.RedirectURL;
                     console.log(u)
