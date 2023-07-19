@@ -3776,11 +3776,11 @@ String.prototype.startsWith || (String.prototype.startsWith = function (n, t) {
 //         u = /^([1-9]|0?[1-9]|[1-3]{1}[0-9]{1})\/([1-9]|0?[1-9]|[1]{1}[0-2])\/(19|20)[0-9]{2}$/.test(r) && i >= 18 && i <= 110;
 //     return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
 // };
-validate.validators.dobValidator = function (n, t) {
-    var r = t.trim().replace(/^\/|\/$/g, ""), i = parseInt(moment(t, "M/D/YYYY", !0).fromNow()),
-        u = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/.test(r) && i >= 18 && i <= 110;
-    return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
-};
+// validate.validators.dobValidator = function (n, t) {
+//     var r = t.trim().replace(/^\/|\/$/g, ""), i = parseInt(moment(t, "M/D/YYYY", !0).fromNow()),
+//         u = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/.test(r) && i >= 18 && i <= 110;
+//     return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
+// };
 // validate.validators.sortCodeValidator = function (n, t) {
 //     var i = t.trim().replace(/-/g, ""), r = /^(\d){6}$/.test(i);
 //     return r ? null : "does not appear to be valid"
@@ -3838,10 +3838,10 @@ mobilePhoneInput.addEventListener("input", function (n) {
 //     if (t.length > 4) for (i = 0; i < r.length; i++) r[i].match(/^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i) && (t = r[i].match(/^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i), t.shift(), t = t.join(" ").toUpperCase());
 //     return n.target.value = t.trim(), u = validate(form, {Postal_code: {postCodeValidator: n.target.value}}), u ? showErrorsForInput(this, u[this.name]) : null
 // });
-dobInput.addEventListener("input", function (n) {
-    var t = validate(form, {Age: {dobValidator: n.target.value}});
-    return t ? showErrorsForInput(this, t[this.name]) : null
-});
+// dobInput.addEventListener("input", function (n) {
+//     var t = validate(form, {Age: {dobValidator: n.target.value}});
+//     return t ? showErrorsForInput(this, t[this.name]) : null
+// });
 streetInput.addEventListener("input", function (n) {
     var t = validate(form, {Street: {streetValidator: n.target.value}});
     return t ? showErrorsForInput(this, t[this.name]) : null
@@ -3854,11 +3854,11 @@ cardNumberInput.addEventListener("input", function (n) {
     var t = validate(form, {Card_number: {bankCardValidator: n.target.value}});
     return t ? showErrorsForInput(this, t[this.name]) : null
 });
-dobInput.addEventListener("keyup", function (n) {
-    backSpace = n.key == "Backspace";
-    var t = n.target.value, i = t;
-    backSpace ? t = n.target.value : (i.match(/^\d{2}$/) != null ? t = i + "/" : i.match(/^\d{2}\/\d{2}$/) != null && (t = i + "/"), n.target.value = t.replace(/\/\//g, "/"))
-});
+// dobInput.addEventListener("keyup", function (n) {
+//     backSpace = n.key == "Backspace";
+//     var t = n.target.value, i = t;
+//     backSpace ? t = n.target.value : (i.match(/^\d{2}$/) != null ? t = i + "/" : i.match(/^\d{2}\/\d{2}$/) != null && (t = i + "/"), n.target.value = t.replace(/\/\//g, "/"))
+// });
 nextPayDateInput.addEventListener("keyup", function (n) {
     backSpace = n.key == "Backspace";
     var t = n.target.value, i = t;
