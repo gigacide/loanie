@@ -150,9 +150,9 @@ function addTotalUserIncome() {
     // u = document.getElementById("other_income").value;
     // n = document.getElementById("total_monthly_amount");
     f = document.getElementById("total_monthly_message");
-    n.value = Number(t) + Number(i) + Number(r) + Number(u);
-    n.dispatchEvent(new Event("input", {bubbles: !0}));
-    f.innerHTML = "Your Total Monthly Income: &dollar;" + n.value
+    // n.value = Number(t) + Number(i) + Number(r) + Number(u);
+    // n.dispatchEvent(new Event("input", {bubbles: !0}));
+    // f.innerHTML = "Your Total Monthly Income: &dollar;" + n.value
 }
 
 function toggleAddressFields() {
@@ -620,15 +620,15 @@ function hideBankMonths() {
     // document.getElementById("bank-months").classList.add("hide_element")
 }
 
-function dobToEpoch() {
-    var n = document.getElementById("dob").value;
-    return n.length == 0 && console.error("No DOB"), "/Date(" + String(moment.utc(n, "DD/MM/YYYY").set({
-        hour: 12,
-        minute: 0,
-        second: 0,
-        millisecond: 0
-    }).valueOf()) + ")/"
-}
+// function dobToEpoch() {
+//     var n = document.getElementById("dob").value;
+//     return n.length == 0 && console.error("No DOB"), "/Date(" + String(moment.utc(n, "DD/MM/YYYY").set({
+//         hour: 12,
+//         minute: 0,
+//         second: 0,
+//         millisecond: 0
+//     }).valueOf()) + ")/"
+// }
 
 function getIpAddress(n) {
     var t = new XMLHttpRequest;
@@ -670,7 +670,7 @@ function processFormData() {
         f = document.getElementById("employername").value.length > 0 ? document.getElementById("employername").value : "Unemployed",
         e = document.getElementById("jobtitle").value.length > 0 ? document.getElementById("jobtitle").value : "Unemployed",
         o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
-        s = dobToEpoch(),
+        // s = dobToEpoch(),
         n = document.referrer,
         // h = '127.0.0.1',
         h = getIpAddress("https://portal.loanieloans.com/api/get_ip"),
@@ -802,7 +802,7 @@ function processFormDataSpecialOffer() {
         f = document.getElementById("employername").value.length > 0 ? document.getElementById("employername").value : "Unemployed",
         e = document.getElementById("jobtitle").value.length > 0 ? document.getElementById("jobtitle").value : "Unemployed",
         // o = document.getElementById("employmentindustry").value.length > 0 ? Number(document.getElementById("employmentindustry").value) : 'Other',
-        s = dobToEpoch(),
+        // s = dobToEpoch(),
         n = document.referrer,
         // h = '127.0.0.1',
         h = getIpAddress("https://portal.loanieloans.com/api/geo/ip"),
@@ -3776,11 +3776,29 @@ String.prototype.startsWith || (String.prototype.startsWith = function (n, t) {
 //         u = /^([1-9]|0?[1-9]|[1-3]{1}[0-9]{1})\/([1-9]|0?[1-9]|[1]{1}[0-2])\/(19|20)[0-9]{2}$/.test(r) && i >= 18 && i <= 110;
 //     return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
 // };
-// validate.validators.dobValidator = function (n, t) {
-//     var r = t.trim().replace(/^\/|\/$/g, ""), i = parseInt(moment(t, "M/D/YYYY", !0).fromNow()),
-//         u = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/.test(r) && i >= 18 && i <= 110;
-//     return u ? null : "must be over 18 years (Format: DD/MM/YYYY)"
-// };
+validate.validators.dobValidator = function (n, t) {
+    var r = t.trim().replace(/^\/|\/$/g, ""),
+        dobDate = new Date(r),
+        currentDate = new Date(),
+        minAge = 18,
+        maxAge = 110;
+
+    if (isNaN(dobDate.getTime())) {
+        // Invalid date format
+        return "Invalid date of birth (Format: MM/DD/YYYY)";
+    }
+
+    // var ageDiff = currentDate.getFullYear() - dobDate.getFullYear();
+    // var isBirthdayPassed = (currentDate.getMonth() > dobDate.getMonth()) || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() >= dobDate.getDate());
+    //
+    // if (ageDiff < minAge || ageDiff > maxAge || (ageDiff === minAge && !isBirthdayPassed)) {
+    //     return "Must be over 18 years old (Format: MM/DD/YYYY)";
+    // }
+
+    return null;
+};
+
+
 // validate.validators.sortCodeValidator = function (n, t) {
 //     var i = t.trim().replace(/-/g, ""), r = /^(\d){6}$/.test(i);
 //     return r ? null : "does not appear to be valid"
@@ -3829,19 +3847,10 @@ mobilePhoneInput.addEventListener("input", function (n) {
     var t = validate(form, {Mobile_phone: {mobilePhoneValidator: n.target.value}});
     return t ? showErrorsForInput(this, t[this.name]) : null
 });
-// homePhoneInput.addEventListener("input", function (n) {
-//     var t = validate(form, {Home_phone: {homePhoneValidator: n.target.value}});
-//     return t ? showErrorsForInput(this, t[this.name]) : null
-// });
-// postalCodeInput.addEventListener("input", function (n) {
-//     var t = n.target.value, r = [t.replace(/-/g, "")], i, u;
-//     if (t.length > 4) for (i = 0; i < r.length; i++) r[i].match(/^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i) && (t = r[i].match(/^([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})$/i), t.shift(), t = t.join(" ").toUpperCase());
-//     return n.target.value = t.trim(), u = validate(form, {Postal_code: {postCodeValidator: n.target.value}}), u ? showErrorsForInput(this, u[this.name]) : null
-// });
-// dobInput.addEventListener("input", function (n) {
-//     var t = validate(form, {Age: {dobValidator: n.target.value}});
-//     return t ? showErrorsForInput(this, t[this.name]) : null
-// });
+dobInput.addEventListener("input", function (n) {
+    var t = validate(form, {Age: {dobValidator: n.target.value}});
+    return t ? showErrorsForInput(this, t[this.name]) : null
+});
 streetInput.addEventListener("input", function (n) {
     var t = validate(form, {Street: {streetValidator: n.target.value}});
     return t ? showErrorsForInput(this, t[this.name]) : null
@@ -3869,10 +3878,10 @@ followingPayDateInput.addEventListener("keyup", function (n) {
     var t = n.target.value, i = t;
     backSpace ? t = n.target.value : (i.match(/^\d{2}$/) != null ? t = i + "/" : i.match(/^\d{2}\/\d{2}$/) != null && (t = i + "/"), n.target.value = t.replace(/\/\//g, "/"))
 });
-dobInput.addEventListener("keyup", function (n) {
-    dobToEpoch(n);
-    console.log(dobToEpoch(n))
-});
+// dobInput.addEventListener("keyup", function (n) {
+//     dobToEpoch(n);
+//     console.log(dobToEpoch(n))
+// });
 // sortCodeInput.addEventListener("keyup", function (n) {
 //     var t, i;
 //     (backSpace = n.key == "Backspace", t = n.target.value, t) && (i = t, backSpace || isNaN(event.target.value.replace(/-/g, "")) ? t = n.target.value : n.target.value = t.match(/\d{2}(?=\d{1,2})|\d+/g).join("-"))

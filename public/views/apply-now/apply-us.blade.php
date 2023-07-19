@@ -13,11 +13,15 @@
 
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
     <link href="../bundles/css334b.css" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery Validation plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/additional-methods.min.js"></script>
+
 
 
 
@@ -2002,7 +2006,6 @@
              src="https://www.facebook.com/tr?id=&amp;ev=PageView&amp;noscript=1" />
     </noscript>
     <!-- End Facebook Pixel Code -->
-{{--    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-"></script>--}}
     <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-21N4P19VN1', { 'allow_enhanced_conversions': true });</script>
     <!-- Bing Pixel Code -->
     <script>
@@ -2028,8 +2031,8 @@
         gtag('config', 'AW-');
     </script>
 
-    <script src="../bundles/scripts_us.js"></script>
-    <script src="../bundles/formscripts_us.js"></script>
+    <script src="../../bundles/scripts_us.js"></script>
+    <script src="../../bundles/formscripts_us.js"></script>
 
     <script>
             function validateABANumber() {
@@ -2062,6 +2065,10 @@
             alert(errorMessage);
         }
     </script>
+
+
+
+
 
 </body>
 
