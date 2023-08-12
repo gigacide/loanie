@@ -1,0 +1,18 @@
+compsoer update & npm i
+
+php artisan serve
+php artisan queue:work
+
+Task 1. - Form Validation Fix
+
+http://127.0.0.1:8000/apply-uk
+
+Files:
+loanie-uk/public/bundles/formscripts_uk.js -> function submitForm()
+loanie-uk/public/bundles/scripts_uk.js
+Http/Controllers/FormController.php -> process function.
+
+
+Task 2. - API
+
+
