@@ -15,7 +15,7 @@ class LoanQuoteFormTest extends DuskTestCase
     public function testLoanQuoteForm()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/loan-quote') // Replace '/loan-quote' with the actual URL of your loan quote form
+            $browser->visit('http://127.0.0.1:8000/apply-us') // Replace '/loan-quote' with the actual URL of your loan quote form
             ->type('loanAmount', '1500') // Fill in the loan amount field with '1500'
             ->radio('term_radio', '3') // Select the 3 months term
             ->radio('radio_purpose', '1') // Select the 'Subsistence' loan purpose

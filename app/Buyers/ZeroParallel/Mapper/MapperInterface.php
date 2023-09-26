@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Buyers\Mapper;
+namespace App\Buyers\ZeroParallel\Mapper;
 
 interface MapperInterface
 {

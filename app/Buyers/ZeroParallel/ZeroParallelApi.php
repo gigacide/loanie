@@ -2,84 +2,149 @@
 
 namespace App\Buyers\ZeroParallel;
 
-use App\Buyers\Mapper\ApplicantMapper;
-use App\Buyers\Mapper\BankMapper;
-use App\Buyers\Mapper\ConsentMapper;
-use App\Buyers\Mapper\EmployerMapper;
-use App\Buyers\Mapper\ResidenceMapper;
-use App\Buyers\Mapper\SourceMapper;
-use App\Services\CustomResponse;
-use App\Services\ErrorHandler;
-use App\Services\ErrorResponse;
-use App\Services\RejectedResponse;
-use App\Services\SoldResponse;
+use App\Buyers\ZeroParallel\Mapper\DataMapper;
+use App\Buyers\ZeroParallel\Response\ApiResponseInterface;
+use App\Buyers\ZeroParallel\Response\JsonResponse;
+use App\Exceptions\ApiException;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Validation\ValidationException;
 
 class ZeroParallelApi
 {
+
+
     protected string $url;
-    protected string $apiKey;
-    protected string $campaignId;
+    protected DataMapper $dataMapper;
+
     protected ZeroParallelApiClient $apiClient;
-    protected ErrorHandler $errorHandler;
+    protected ZeroParallelLeadStatusApi $leadStatusApi;
 
     public function __construct(
         ZeroParallelApiClient $apiClient,
-        ErrorHandler          $errorHandler
-    )
-    {
+        DataMapper $dataMapper,
+        ZeroParallelLeadStatusApi $leadStatusApi
+    ) {
         $this->url = 'https://leads.zeroparallel.com/lead/';
-        $this->apiKey = '094b5b15f';
-        $this->campaignId = 'Loanie';
         $this->apiClient = $apiClient;
-        $this->errorHandler = $errorHandler;
+        $this->dataMapper = $dataMapper;
+        $this->leadStatusApi = $leadStatusApi;
     }
 
-
-    public function sendLoanApplication(array $data)
+    /**
+     * @throws GuzzleException
+     */
+    /**
+     * Send a loan application.
+     *
+     * @param array $data The loan application data to send.
+     * @return ApiResponseInterface The API response.
+     * @throws GuzzleException
+     */
+    public function sendLoanApplication(array $data): ApiResponseInterface
     {
-        $mappedData = $this->mapData($data);
-
         try {
-            $response = $this->apiClient->sendRequest($this->url, $mappedData);
+            // Step 1: Map loan application data
+            $mappedData = $this->mapLoanApplicationData($data);
+//            $mappedData['testSold'] = 1;
 
-            return match ($response['Status']) {
-                'Rejected' => new RejectedResponse($response),
-                'Error' => new ErrorResponse($response),
-                'Sold' => new SoldResponse($response),
-                default => new CustomResponse($response),
-            };
+            // Step 2: Send the loan application request
+            $loanApplicationResponse = $this->sendLoanApplicationRequest($mappedData);
+
+            // Step 3: Handle the response
+            return $this->handleLoanApplicationResponse($loanApplicationResponse);
+        } catch (ValidationException $e) {
+            return $this->handleValidationException();
         } catch (\Exception $e) {
-            // Handle exceptions using your error handling class
-            $this->errorHandler->handleException($e);
-            return new ErrorResponse(['error' => 'An error occurred.']);
+            return $this->handleGenericException();
         }
     }
 
-
-    public function mapData(array $requestData): array
+    /**
+     * Map loan application data.
+     *
+     * @param array $data The loan application data to map.
+     * @return array Mapped loan application data.
+     * @throws ValidationException
+     */
+    private function mapLoanApplicationData(array $data): array
     {
-        $mappedData = [
-            'apiId' => '8DC69457240C44DDABAB0154B8E404C5',
-            'apiPassword' => '094b5b15f',
-            'testMode' => '1',
-            'productId' => '19',
-            'price' => '0',
-        ];
-
-        $sourceMapper = new SourceMapper();
-        $applicantMapper = new ApplicantMapper();
-        $employerMapper = new EmployerMapper();
-        $residenceMapper = new ResidenceMapper();
-        $bankMapper = new BankMapper();
-        $consentMapper = new ConsentMapper();
-
-        $mappedData += $applicantMapper->map($requestData['applicant']);
-        $mappedData += $bankMapper->map($requestData['bank']);
-        $mappedData += $employerMapper->map($requestData['employer']);
-        $mappedData += $residenceMapper->map($requestData['residence']);
-        $mappedData += $consentMapper->map($requestData['consent']);
-        $mappedData += $sourceMapper->map($requestData['source']);
-
-        return $mappedData;
+        return $this->dataMapper->map($data);
     }
+
+    /**
+     * Send the loan application request.
+     *
+     * @param array $mappedData The mapped loan application data to send.
+     * @return ApiResponseInterface|JsonResponse The API response.
+     */
+    private function sendLoanApplicationRequest(array $mappedData): ApiResponseInterface|JsonResponse
+    {
+        return $this->apiClient->postLoanApplication($this->url, $mappedData);
+    }
+
+    /**
+     * Handle the loan application response.
+     *
+     * @param ApiResponseInterface|JsonResponse $response The loan application response.
+     * @return ApiResponseInterface The processed API response.
+     * @throws GuzzleException
+     * @throws ApiException
+     */
+    private function handleLoanApplicationResponse(JsonResponse|ApiResponseInterface $response): ApiResponseInterface
+    {
+        if ($response instanceof JsonResponse) {
+            return $response;
+        } else {
+            // Handle non-JSON response (assuming it's ApiResponseInterface)
+            $leadId = $response->getLeadId();
+            return $this->handleNonJsonResponse($leadId);
+        }
+    }
+
+    /**
+     * Handle non-JSON response by checking lead status.
+     *
+     * @param string $leadId The lead ID.
+     * @return ApiResponseInterface The API response.
+     * @throws GuzzleException
+     * @throws ApiException
+     */
+    private function handleNonJsonResponse(string $leadId): ApiResponseInterface
+    {
+        return $this->leadStatusApi->checkLeadStatus($leadId);
+    }
+
+    /**
+     * Handle generic exception.
+     *
+     * @return ApiResponseInterface The API response.
+     */
+    private function handleGenericException(): ApiResponseInterface
+    {
+        return new JsonResponse(['error' => 'An error occurred'], 500);
+    }
+
+    /**
+     * Handle validation exception.
+     *
+     * @return ApiResponseInterface The API response.
+     */
+    private function handleValidationException(): ApiResponseInterface
+    {
+        return $this->buildJsonResponse();
+    }
+
+    /**
+     * Build a JSON response for validation errors.
+     *
+     * @return ApiResponseInterface The API response.
+     */
+    private function buildJsonResponse(): ApiResponseInterface
+    {
+        $data = ['error' => 'Validation Errors'];
+        return new JsonResponse($data);
+    }
+
+
+
 }

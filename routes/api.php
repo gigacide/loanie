@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 
 
@@ -26,4 +26,4 @@ Route::post('process', [FormController::class, 'process']);
 Route::get('get_ip', [FormController::class, 'getIpAddress']);
 
 /*** Check Status Routes ***/
-Route::get('check-status/{check_status_id}', [FormController::class, 'CheckStatusNew']);
+//Route::get('check-status/{check_status_id}', [FormController::class, 'CheckStatusNew']);

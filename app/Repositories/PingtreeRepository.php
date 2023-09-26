@@ -6,7 +6,6 @@ use App\Models\Applicant;
 use App\Models\Bank;
 use App\Models\Consent;
 use App\Models\Employer;
-use App\Models\Expense;
 use App\Models\Loan;
 use App\Models\Residence;
 use App\Models\Source;
@@ -20,7 +19,7 @@ class PingtreeRepository
         $loanApplication = new LoanApplication();
         $loanApplication->affiliate_id = $validatedData['affiliate_id'];
         $loanApplication->offer_id = $validatedData['offer_id'];
-        $loanApplication->uuid = $validatedData['uuid']->toString();
+        $loanApplication->uuid = $validatedData['uuid'];
         $loanApplication->transaction_id = $validatedData['transaction_id'];
         $loanApplication->minCommissionAmount = $validatedData['minCommissionAmount'];
         $loanApplication->maxCommissionAmount = $validatedData['maxCommissionAmount'];
@@ -106,7 +105,6 @@ class PingtreeRepository
         $residence = new Residence();
         $residence->lead_id = $uuid;
         $residence->houseNumber = $validatedData['residence']['houseNumber'];
-//        $residence->houseName = $validatedData['residence']['houseName'];
         $residence->residentialStatus = $validatedData['residence']['residentialStatus'];
         $residence->addressStreet1 = $validatedData['residence']['addressStreet1'];
         $residence->city = $validatedData['residence']['city'];
@@ -178,8 +176,6 @@ class PingtreeRepository
         $consent = new Consent();
         $consent->lead_id = $uuid;
         $consent->consentFinancial = $validatedData['consent']['consentFinancial'];
-//        $consent->consentCreditSearch = $validatedData['consentCreditSearch'];
-//        $consent->consentToMarketingEmails = $validatedData['consentToMarketingEmails'];
         $response = $consent->save();
 
         if ($response) {

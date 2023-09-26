@@ -1,83 +1,85 @@
 <?php
 
-use App\Services\PostbackService;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+namespace Tests\Unit\Services\Postback;
+
+use App\Models\Postback;
+use App\Services\Postback\PostbackHttpClient;
+use App\Services\Postback\PostbackParameterReplacer;
+use App\Services\Postback\PostbackService;
+use Illuminate\Support\Facades\Log;
+use PHPUnit\Framework\MockObject\Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class PostbackServiceTest extends TestCase
 {
+    protected PostbackService $postbackService;
+    protected PostbackParameterReplacer|MockObject $parameterReplacer;
+    protected PostbackHttpClient|MockObject $postbackClient;
+
+    /**
+     * @throws Exception
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->parameterReplacer = $this->createMock(PostbackParameterReplacer::class);
+        $this->postbackClient = $this->createMock(PostbackHttpClient::class);
+
+        $this->postbackService = new PostbackService($this->parameterReplacer, $this->postbackClient);
+    }
+
     public function testSendPostbackSuccess()
     {
-        // Create a mock for the GuzzleHttp Client
-        $mockHandler = new MockHandler([new Response(200)]);
-        $handlerStack = HandlerStack::create($mockHandler);
-        $client = new Client(['handler' => $handlerStack]);
-
-        // Create an instance of the PostbackService and set the mock client
-        $postbackService = new PostbackService();
-        $reflection = new ReflectionProperty(PostbackService::class, 'client');
-        $reflection->setAccessible(true);
-        $reflection->setValue($postbackService, $client);
-
-        // Call the sendPostback method with dummy data
-        $affiliate = (object) ['postback_url' => 'https://example.com/postback'];
-        $clientResponse = [];
-        $loanApplication = [];
-        $result = $postbackService->sendPostback($affiliate, $clientResponse, $loanApplication);
-
-        // Assert that the postback was sent successfully
-        $this->assertEquals($clientResponse, $result);
-    }
-
-    public function testSendPostbackFailure()
-    {
-        // Create a mock for the GuzzleHttp Client
-        $mockHandler = new MockHandler([new Response(500)]);
-        $handlerStack = HandlerStack::create($mockHandler);
-        $client = new Client(['handler' => $handlerStack]);
-
-        // Create an instance of the PostbackService and set the mock client
-        $postbackService = new PostbackService();
-        $reflection = new ReflectionProperty(PostbackService::class, 'client');
-        $reflection->setAccessible(true);
-        $reflection->setValue($postbackService, $client);
-
-        // Call the sendPostback method with dummy data
-        $affiliate = (object) ['postback_url' => 'https://example.com/postback'];
-        $clientResponse = [];
-        $loanApplication = [];
-        $result = $postbackService->sendPostback($affiliate, $clientResponse, $loanApplication);
-
-        // Assert that the postback failed
-        $this->assertEquals($clientResponse, $result);
-    }
-
-    public function testReplacePostbackParams()
-    {
-        // Create an instance of the PostbackService
-        $postbackService = new PostbackService();
-
-        // Define dummy data
-        $postbackUrl = 'https://example.com/postback?aff_sub={aff_sub}&amount={amount}';
+        // Arrange
         $loanApplication = [
-            'aff_sub' => '12345',
-            'transaction_id' => 'abc123',
+            'affiliate_id' => 123,
+            // other loan application data
         ];
         $clientResponse = [
-            'Price' => '50.00',
+            // client response data
+        ];
+        $postbackUrl = 'https://example.com/postback-url';
+
+        $this->parameterReplacer->expects($this->once())
+            ->method('replace')
+            ->willReturn($postbackUrl);
+
+        $this->postbackClient->expects($this->once())
+            ->method('send')
+            ->with($postbackUrl);
+
+        // Act
+        $this->postbackService->sendPostback($loanApplication, $clientResponse);
+
+        // Assert: You may need to add specific assertions based on your code
+        $this->assertTrue(true); // Placeholder assertion
+    }
+
+    public function testSendPostbackExceptionHandled()
+    {
+        // Arrange
+        $loanApplication = [
+            'affiliate_id' => 123,
+            // other loan application data
+        ];
+        $clientResponse = [
+            // client response data
         ];
 
-        // Call the replacePostbackParams method
-        $result = $postbackService->replacePostbackParams($postbackUrl, $loanApplication, $clientResponse);
+        $this->parameterReplacer->expects($this->once())
+            ->method('replace')
+            ->willThrowException(new \Exception('Test exception'));
 
-        // Define the expected result with replaced parameters
-        $expectedResult = 'https://example.com/postback?aff_sub=12345&amount=50.00';
+        Log::shouldReceive('error')
+            ->once()
+            ->with('An error occurred: Test exception');
 
-        // Assert that the parameters in the postback URL were replaced correctly
-        $this->assertEquals($expectedResult, $result);
+        // Act
+        $this->postbackService->sendPostback($loanApplication, $clientResponse);
+
+        // Assert: You may need to add specific assertions based on your code
+        $this->assertTrue(true); // Placeholder assertion
     }
 }
-

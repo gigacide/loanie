@@ -303,133 +303,97 @@ function injectRedirectAsLink(n) {
     document.getElementById("countdown").appendChild(t)
 }
 
-function handleSuccess() {
-    var t = processFormData();
-    console.log(t);
+async function handleSuccess() {
+    try {
+        const endpoint = "http://127.0.0.1:8000/api/process";
+        const t = processFormData();
+        console.log(t);
 
-    form.classList.add("hide_element");
-    progressDiv.classList.remove("hide_element");
-    document.getElementsByTagName("body")[0].scrollIntoView({ behavior: "auto" });
 
-    var n = "https://portal.loanieloans.com/api/process";
-    fetch(n, { method: "POST", headers: { "Content-Type": "application/json" }, body: t })
-        .then(n => n.json())
-        .then(n => {
-            console.log('POST::', n);
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: t
+        };
+
+        const response = await fetch(endpoint, requestOptions);
+
+        console.log(response);
+        debugger
+        if (response.status >= 200 && response.status < 300) {
+            const data = await response.json();
+            console.log("Response Data:", data);
+            await handleResponse(data);
+        } else {
+            console.error("Error:", response.status, response.statusText);
+            // Handle the error here
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+        // Handle any other errors here
+    }
+}
+
+async function handleResponse(data) {
+    console.log(data);
+    debugger;
+    try {
+        const leadStatus = data.status;
+        const statusText = data.status_text;
+        const redirectUrl = data.redirect_url;
+        const uPingForm = document.getElementById("uPingForm");
+        uPingForm.style.display = "none";
+
+        if (leadStatus === 1) {
             debugger;
-
-            var checkStatusID = n.CheckStatusID;
-            var CheckStatusURL = n.CheckStatusURL;
-            console.log('checkStatus ID::', checkStatusID);
+            console.warn("Redirecting");
+            progressDiv.classList.add("hide_element");
+            countdownDiv.classList.remove("hide_element");
+            startCountDown(leadStatus, redirectUrl);
+            t = 3;
+            clearInterval(t);
+        } else if (leadStatus === 2) {
             debugger;
+            countdownDiv.classList.add("hide_element");
+            console.warn("No lender");
+            statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+            t = 3;
+            clearInterval(t);
 
-            var i = CheckStatusURL;
-            t = setInterval(() => {
-                var r;
-                var correlationId = checkStatusID;
-                var url = `https://portal.loanieloans.com/api/check-lead-status`;
-                fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ correlationId }) })
-                    .then(response => response.json())
-                    .then(response => {
-                        // Rest of your code here
-                        const percentageComplete = response.PercentageComplete;
-                        const status = response.Status;
-                        const leadId = response.LeadId;
-                        const price = response.Price;
-                        const redirectUrl = response.RedirectUrl;
-
-
-                        var u = response.CheckStatusID,
-                            f = response.PercentageComplete,
-                            e = response.CheckStatus,
-                            x = response.Status,
-                            i = response.RedirectUrl;
-
-                        // x = 'Rejected'
-                        // console.log(x)
-                        debugger
-                        if (x === 'Sold') {
-                            if (trackProgress(f), i) {
-                                console.warn("redirecting");
-                                progressDiv.classList.add("hide_element");
-                                countdownDiv.classList.remove("hide_element");
-                                startCountDown(u, i);
-                                // trackFacebookConversion(r);
-                                // trackGoogleConversion(r);
-                                // trackBingConversion(u, r);
-                                clearInterval(t);
-                                return false;
-                            }
-                        }
-
-                        if (x === "Rejected" || (f === 100 && !i)) {
-                            countdownDiv.classList.add("hide_element");
-                            console.warn("no lender");
-                            statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-                            clearInterval(t);
-                            return;
-                        }
-
-
-
-
-
-                    })
-
-                }, 2500);
-        });
+            // Hide the form when leadStatus is 2
+        } else {
+            // Handle other leadStatus values if needed
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+        // Handle any other errors here
+    }
 }
 
 
 
+//                 if (trackProgress(price, redirectUrl)) {
+//                     console.warn("redirecting");
+//                     progressDiv.classList.add("hide_element");
+//                     countdownDiv.classList.remove("hide_element");
+//                     startCountDown(leadId, redirectUrl);
+//                     // trackFacebookConversion(leadId);
+//                     // trackGoogleConversion(leadId);
+//                     // trackBingConversion(leadId, redirectUrl);
+//                     clearInterval(t);
+//                     return false;
+//                 }
+//             }
+//
+//             if (leadStatus === "Rejected" || (price === 100 && !redirectUrl)) {
+//                 countdownDiv.classList.add("hide_element");
+//                 console.warn("no lender");
+//                 statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
+//                 clearInterval(t);
+//             }
 
-function handleSold(responseData) {
-    const leadID = responseData.LeadID;
-    const price = responseData.Price;
-    const redirectURL = responseData.Redirect;
-
-    // Redirect the user to the provided redirect URL
-    window.location.href = redirectURL;
-
-    // Optionally, you can also perform other actions based on the lead ID and price
-    console.warn("Redirecting...");
-    progressDiv.classList.add("hide_element");
-    countdownDiv.classList.remove("hide_element");
-}
-
-
-function handleError(responseData) {
-    const errorMessages = responseData.Messages;
-    console.warn(errorMessages);
-    statusText.innerHTML = "Application error. Please try again.";
-
-    // Handle the error response based on the error messages
-}
-
-function handleRejected(responseData) {
-    const leadID = responseData.LeadID;
-    // Handle the rejected response based on the lead ID
-    console.warn("no lender");
-    countdownDiv.classList.add("hide_element");
-    statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-    // clearInterval(requestBody);
-}
-
-function handleRejectedWithPriceReject(responseData) {
-    const leadID = responseData.LeadID;
-    const priceRejectAmount = responseData.PriceRejectAmount;
-    // Handle the rejected response with price reject based on the lead ID and price reject amount
-    console.warn("no lender");
-    countdownDiv.classList.add("hide_element");
-    statusText.innerHTML = "Could not match you with a lender at this time. Please try again.";
-    // clearInterval(requestBody);
-}
-
-function handleRejectedWithPriceReject(responseData) {
-    var leadID = responseData.LeadID;
-    var priceRejectAmount = responseData.PriceRejectAmount;
-    // Handle the rejected response with price reject based on the lead ID and price reject amount
-}
 
 
 function handleSuccessWithOffer() {
@@ -673,12 +637,11 @@ function processFormData() {
         // s = dobToEpoch(),
         n = document.referrer,
         // h = '127.0.0.1',
-        h = getIpAddress("https://portal.loanieloans.com/api/get_ip"),
+        h = getIpAddress("http://127.0.0.1:8000/api/get_ip"),
         // h = 'loanieloans.com'
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
         followingPayDates = followingPayDate(),
-        // bankSortcode = bankSortCode(),
         c = getLoanProceedUse(),
         l = uping.defaultAffiliate,
         i;
@@ -686,8 +649,8 @@ function processFormData() {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const affiliate_id = urlParams.get('affiliate_id') ?? '0001';
-    const offer_id = urlParams.get('offer_id')  ?? '2';
+    const affiliate_id = urlParams.get('affiliate_id') ?? 'YDLr';
+    const offer_id = urlParams.get('offer_id')  ?? '1';
     const transaction_id = urlParams.get('transaction_id')  ?? '';
 
     debugger
@@ -805,7 +768,7 @@ function processFormDataSpecialOffer() {
         // s = dobToEpoch(),
         n = document.referrer,
         // h = '127.0.0.1',
-        h = getIpAddress("https://portal.loanieloans.com/api/geo/ip"),
+        h = getIpAddress("http://127.0.0.1:8000/api/geo/ip"),
         dateOfBirthDates = dateOfBirth(),
         nextPayDates = nextPayDate(),
         followingPayDates = followingPayDate(),

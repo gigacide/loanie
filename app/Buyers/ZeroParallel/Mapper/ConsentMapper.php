@@ -1,19 +1,56 @@
 <?php
 
-namespace App\Buyers\Mapper;
+namespace App\Buyers\ZeroParallel\Mapper;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ConsentMapper
 {
-    public function map(array $data): array
+    /**
+     * Map consent data.
+     *
+     * @param array $consentData
+     * @return array
+     * @throws ValidationException
+     */
+    public function map(array $consentData): array
     {
+        $validatedData = $this->validateData($consentData);
+
         return [
-            'consentEmailSms' => $this->mapConsentToMarketingEmails($data['consentToMarketingEmails']),
+            'consentEmailSms' => $this->mapBooleanToString($validatedData['consentToMarketingEmails']),
         ];
     }
 
-    private function mapConsentToMarketingEmails(string $consentToMarketingEmails): string
+    /**
+     * Validate consent data.
+     *
+     * @param array $consentData
+     * @return array
+     * @throws ValidationException
+     */
+    private function validateData(array $consentData): array
     {
-        // Mapping logic for consent to marketing emails
+        $validator = Validator::make($consentData, [
+            'consentToMarketingEmails' => 'boolean',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        return $consentData;
+    }
+
+    /**
+     * Map a boolean value to a string.
+     *
+     * @param bool $value
+     * @return string
+     */
+    private function mapBooleanToString(bool $value): string
+    {
+        return $value ? 'YES' : 'NO';
     }
 }
-

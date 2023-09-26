@@ -7,7 +7,7 @@ class RejectedResponseTest extends TestCase
 {
     public function testGetStatus()
     {
-        // Create an instance of RejectedResponse with dummy data
+        // Create an instance of RejectResponse with dummy data
         $data = [
             'Status' => 'rejected',
             'LeadID' => '98765',
@@ -20,7 +20,7 @@ class RejectedResponseTest extends TestCase
 
     public function testGetLeadID()
     {
-        // Create an instance of RejectedResponse with dummy data
+        // Create an instance of RejectResponse with dummy data
         $data = [
             'Status' => 'rejected',
             'LeadID' => '98765',

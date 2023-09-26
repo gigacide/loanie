@@ -4,62 +4,76 @@ namespace App\Buyers\ZeroParallel\Mapper;
 
 use Illuminate\Support\Facades\Validator;
 
-class SourceMapper
+class LoanMapper
 {
-    public function map(array $sourceData): array
+    public function map(array $loanData): array
     {
-        return [
-            'userIp' => $this->validateIpAddress($sourceData['ipAddress']),
-            'userAgent' => $this->validateUserAgent($sourceData['userAgent']),
-            'source' => $this->validateSource($sourceData['creationUrl']),
-        ];
+        try {
+            return [
+                'loanAmount' => $this->validateLoanAmount($loanData['loanAmount']),
+                'loanTerms' => $this->validateLoanTerms($loanData['loanTerms']),
+                'loanPurpose' => $this->validateLoanPurpose($loanData['loanPurpose']),
+            ];
+        } catch (\Exception $e) {
+            // Handle validation errors
+            return ['validation_errors' => $e->getMessage()];
+        }
     }
 
-    private function validateIpAddress($ipAddress)
+    private function validateLoanAmount($loanAmount)
     {
-        $validator = Validator::make(['ipAddress' => $ipAddress], [
-            'ipAddress' => [
+        $validator = Validator::make(['loanAmount' => $loanAmount], [
+            'loanAmount' => [
                 'required',
-                'ip:ipv4', // Use the 'ip' rule with the 'ipv4' option
+                'numeric', // Validate as a numeric value
+                'between:1,100000', // Validate that it's within the specified range
                 // You can add more validation rules here if needed
             ],
         ]);
 
         if ($validator->fails()) {
             // Handle validation failure (you can throw an exception or return a default value)
-            return '127.0.0.1'; // Default to a safe IP address
+            return 100; // Default to 0 or any other appropriate default value
         }
 
-        return $ipAddress;
+        return $loanAmount;
     }
 
-    private function validateUserAgent($userAgent)
+    private function validateLoanTerms($loanTerms)
     {
-        // Validate user agent using Laravel's validation
-        $validator = Validator::make(['userAgent' => $userAgent], [
-            'userAgent' => 'regex:/^[a-zA-Z0-9()\/:;?.,\-_ ]+$/',
+        $validator = Validator::make(['loanTerms' => $loanTerms], [
+            'loanTerms' => [
+                'required',
+                'integer', // Validate as an integer value
+                'between:1,120', // Validate that it's within the specified range
+                // You can add more validation rules here if needed
+            ],
         ]);
 
         if ($validator->fails()) {
             // Handle validation failure (you can throw an exception or return a default value)
-            return 'Unknown User Agent';
+            return 12; // Default to 0 or any other appropriate default value
         }
 
-        return $userAgent;
+        return $loanTerms;
     }
 
-    private function validateSource($source)
+    private function validateLoanPurpose($loanPurpose)
     {
-        // Validate and sanitize source using Laravel's validation
-        $validator = Validator::make(['source' => $source], [
-            'source' => 'string',
+        $validator = Validator::make(['loanPurpose' => $loanPurpose], [
+            'loanPurpose' => [
+                'required',
+                'integer', // Validate as an integer value
+                'in:1,2,3', // Validate that it's one of the specified values (adjust as needed)
+                // You can add more validation rules here if needed
+            ],
         ]);
 
         if ($validator->fails()) {
             // Handle validation failure (you can throw an exception or return a default value)
-            return 'Unknown Source';
+            return 1; // Default to 0 or any other appropriate default value
         }
 
-        return $source;
+        return $loanPurpose;
     }
 }

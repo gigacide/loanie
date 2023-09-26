@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Buyers\Utils;
+namespace App\Buyers\ZeroParallel\Utils;
 
 class DateUtils
 {

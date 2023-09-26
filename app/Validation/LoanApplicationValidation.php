@@ -57,7 +57,6 @@ class LoanApplicationValidation
 
             'residence' => 'required|array',
             'residence.houseNumber' => 'required',
-//            'residence.houseName' => 'required_without:residence.houseNumber',
             'residence.residentialStatus' => 'required|in:1,2,3,4,5,6',
             'residence.addressStreet1' => 'required|different:residence.houseNumber|min:4|max:128',
             'residence.city' => 'required|min:2|max:32',
@@ -67,7 +66,6 @@ class LoanApplicationValidation
 
             'employer' => 'required|array',
             'employer.employerName' => 'required|min:2|max:64',
-//            'employer.employmentStatus' => 'required|in:1,2,3,4,5,6,7,8,9,10,11',
             'employer.jobTitle' => 'required|min:2|max:64',
             'employer.monthlyIncome' => 'required|numeric|gte:100|lte:15000',
             'employer.incomeCycle' => 'required|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14',
@@ -88,10 +86,11 @@ class LoanApplicationValidation
             'bank.monthsAtBank' => 'required|in:12,24,36,48,60,72,84,96',
             'bank.bankName' => 'required|min:2|max:64',
             'bank.bankPhone' => 'nullable|min:10',
-            'bank.directDeposit' => ['required', 'in:yes,no'],
+            'bank.directDeposit' => 'required',
 
             'consent' => 'required|array',
             'consent.consentFinancial' => 'required|boolean',
+            'consent.consentToMarketingEmails' => 'boolean',
         ];
 
 

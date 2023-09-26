@@ -60,6 +60,6 @@ class LoanApplicationServiceTest extends TestCase
     }
 
     /**
-     * Add more test methods for other response types (RejectedWithPriceRejectResponse, ErrorResponse, RejectedResponse) here
+     * Add more test methods for other response types (RejectedWithPriceRejectResponse, ErrorResponse, RejectResponse) here
      */
 }
